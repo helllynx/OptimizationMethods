@@ -33,6 +33,18 @@ def bitwise_search(fun, a, b, e, n):
     return x_opt, fun(x_opt), e, i
 
 
+def bisection(fun, a, b, e):
+    c = (a + b) / 2
+    while (b - a) / 2 > e:
+        if fun(c) == 0:
+            return c
+        elif fun(a) * fun(c) < 0:
+            b = c
+        else:
+            a = c
+        c = (a + b) / 2
+
+    return c
 
 
 def nt(a, b, fun, fun_d, e):
@@ -44,6 +56,20 @@ def nt(a, b, fun, fun_d, e):
         x0 = x1
         x1 = x0 - (fun(x0) / fun_d(x0))
 
+
+
+def gss(f, a, b, tol=1e-5):
+    gr = (np.sqrt(5) + 1) / 2
+    c = b - (b - a) / gr
+    d = a + (b - a) / gr
+    while abs(c - d) > tol:
+        if f(c) < f(d):
+            b = d
+        else:
+            a = c
+        c = b - (b - a) / gr
+        d = a + (b - a) / gr
+    return (b + a) / 2
 
 def plot(x, y, label_x="", label_y="", title=""):
     plt.plot(x, y)
@@ -60,9 +86,5 @@ def myfunc(x):
 def myfunc_prime(x):
     return 4*pow(x, 3) + 2*x + 1
 
-f = np.vectorize(myfunc)
 
-f_prime = np.vectorize(myfunc_prime)
-
-
-print(bis(f, -1, 0))
+print(gss(myfunc, -1, 0))
