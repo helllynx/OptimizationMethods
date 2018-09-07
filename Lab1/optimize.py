@@ -1,6 +1,7 @@
 import numpy as np
 from numpy import power as pow
 import matplotlib.pyplot as plt
+from random import uniform as uni
 
 
 def brute(fun, a, b, e):
@@ -57,7 +58,6 @@ def nt(a, b, fun, fun_d, e):
         x1 = x0 - (fun(x0) / fun_d(x0))
 
 
-
 def gss(f, a, b, tol=1e-5):
     gr = (np.sqrt(5) + 1) / 2
     c = b - (b - a) / gr
@@ -71,6 +71,49 @@ def gss(f, a, b, tol=1e-5):
         d = a + (b - a) / gr
     return (b + a) / 2
 
+
+def parabolic_select_helper(fun, a, b):
+    while True:
+        x = sorted([uni(a, b) for _ in range(0, 3)])
+        if fun(x[0]) >= fun(x[1]) <= fun(x[2]):
+            return x
+
+
+def parabolic_interp(fun, a, b, e):
+    x0, x1, x2 = parabolic_select_helper(fun, a, b)
+    i = 0
+    f0 = fun(x0)
+    f1 = fun(x1)
+    f2 = fun(x2)
+
+    while True:
+        a1 = (f1 - f0) / (x1 - x0)
+        a2 = (1 / (x2 - x1)) * (((f2 - f0) / (x2 - x0)) - ((f1 - f0) / (x1 - x0)))
+        if i == 0:
+            X = 0.5 * (x0 + x1 - a1 / a2)
+        else:
+            X2 = 0.5 * (x0 + x1 - a1 / a2)
+            if np.abs(X2 - X) < e:
+                x_min = X2
+                i += 1
+                return x_min, i
+            else:
+                X = X2
+        f_min = fun(X)
+        i += 1
+        if X < x2:
+            x2 = x1
+            f2 = f1
+            x1 = X
+            f1 = f_min
+        else:
+            x0 = x1
+            f0 = f1
+            x1 = X
+            f1 = f_min
+
+
+
 def plot(x, y, label_x="", label_y="", title=""):
     plt.plot(x, y)
     plt.grid(True)
@@ -83,8 +126,9 @@ def plot(x, y, label_x="", label_y="", title=""):
 def myfunc(x):
     return pow(x, 4) + pow(x, 2) + x + 1
 
+
 def myfunc_prime(x):
-    return 4*pow(x, 3) + 2*x + 1
+    return 4 * pow(x, 3) + 2 * x + 1
 
 
-print(gss(myfunc, -1, 0))
+print(parabolic_interp(myfunc, -1, 0, 0.0001))
