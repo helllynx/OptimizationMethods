@@ -9,56 +9,60 @@ def brute(fun, a, b, e):
     return np.min(fun(x)), x.size
 
 
-def bitwise_search(fun, a, b, e, n, n_):
-    d = (b - a) / n
+def bitwise_search(fun, a, b, e, bn, n):
+    d = (b - a) / bn
     x0 = a
     i = 0
-    for _ in range(0, n_):
+    for _ in range(0, n):
         f0 = fun(x0)
         x1 = x0 + d
         f1 = fun(x1)
         if f0 > f1:
             x0 += d
             if (x0 > b):
-                print("There is no extrema\n")
-                return
+                raise Exception("Most likely your function is not unimodal")
         else:
             a = x1 - 2 * d
             b = x1
-            d /= n
+            d /= bn
             x0 = a
         i += 1
         if np.abs(f0 - f1) < e:
             break
     x_opt = (a + b) / 2
-    return x_opt, fun(x_opt), e, i
+    return x_opt, i
 
 
-def bisection(fun, a, b, e):
+def bisection(fun_prime, a, b, e):
+    i = 0
     c = (a + b) / 2
     while (b - a) / 2 > e:
-        if fun(c) == 0:
-            return c
-        elif fun(a) * fun(c) < 0:
+        if fun_prime(c) == 0:
+            i += 1
+            return c, i
+        elif fun_prime(a) * fun_prime(c) < 0:
+            i += 1
             b = c
         else:
             a = c
         c = (a + b) / 2
-    return c
+    return c, i
 
 
-def gss(f, a, b, e=0.001):
-    gr = (np.sqrt(5) + 1) / 2 # equals 1.618....
+def gss(fun, a, b, e=0.001):
+    i = 0
+    gr = (np.sqrt(5) + 1) / 2  # equals 1.618....
     c = b - (b - a) / gr
     d = a + (b - a) / gr
     while abs(c - d) > e:
-        if f(c) < f(d):
+        if fun(c) < fun(d):
+            i += 1
             b = d
         else:
             a = c
         c = b - (b - a) / gr
         d = a + (b - a) / gr
-    return (b + a) / 2
+    return (b + a) / 2, i
 
 
 def parabolic_select_helper(fun, a, b, n):
@@ -168,3 +172,25 @@ def myfunc_prime(x):
 def myfunc_second(x):
     return 12 * pow(x, 2) + 2
 
+
+def massive_test(fun, fun_prime, fun_second, a, b, n, x0, e_start, e_end, e_step):
+    test = {}
+    test["bitwise_search"] = [[bitwise_search(fun, a, b, e, 4, n)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["brute"] = [[brute(fun, a, b, e, )[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["bisection"] = [[bisection(fun_prime, a, b, e)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["gss"] = [[gss(fun, a, b, e)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["parabolic_interp"] = [[parabolic_interp(fun, a, b, e, n)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["middle_point"] = [[middle_point(fun_prime, a, b, e, n)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["chords"] = [[chords(fun_prime, a, b, e, n)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["newton"] = [[newton(fun_prime, fun_second, x0, e, n)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    return test
+
+
+data = massive_test(myfunc, myfunc_prime, myfunc_second, -1, 0, 100, -0.3, 0.001, 0.000001, 0.00001)
+vals = data.get("bitwise_search")[:]
+y = [d[0] for d in vals]
+x = [d[1] for d in vals]
+print(x,y)
+
+plt.plot(x,y)
+plt.show()
