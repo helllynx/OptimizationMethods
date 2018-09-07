@@ -9,11 +9,11 @@ def brute(fun, a, b, e):
     return np.min(fun(x)), x.size
 
 
-def bitwise_search(fun, a, b, e, n):
+def bitwise_search(fun, a, b, e, n, n_):
     d = (b - a) / n
     x0 = a
     i = 0
-    while True:
+    for _ in range(0, n_):
         f0 = fun(x0)
         x1 = x0 + d
         f1 = fun(x1)
@@ -44,25 +44,14 @@ def bisection(fun, a, b, e):
         else:
             a = c
         c = (a + b) / 2
-
     return c
 
 
-def nt(a, b, fun, fun_d, e):
-    x0 = (a + b) / 2
-    x1 = x0 - (fun(x0) / fun_d(x0))
-    while True:
-        if np.fabs(x1 - x0) < e:
-            return x1
-        x0 = x1
-        x1 = x0 - (fun(x0) / fun_d(x0))
-
-
-def gss(f, a, b, tol=1e-5):
-    gr = (np.sqrt(5) + 1) / 2
+def gss(f, a, b, e=0.001):
+    gr = (np.sqrt(5) + 1) / 2 # equals 1.618....
     c = b - (b - a) / gr
     d = a + (b - a) / gr
-    while abs(c - d) > tol:
+    while abs(c - d) > e:
         if f(c) < f(d):
             b = d
         else:
@@ -72,21 +61,22 @@ def gss(f, a, b, tol=1e-5):
     return (b + a) / 2
 
 
-def parabolic_select_helper(fun, a, b):
-    while True:
+def parabolic_select_helper(fun, a, b, n):
+    for _ in range(0, n):
         x = sorted([uni(a, b) for _ in range(0, 3)])
         if fun(x[0]) >= fun(x[1]) <= fun(x[2]):
             return x
+    raise Exception("Most likely your function is not unimodal")
 
 
-def parabolic_interp(fun, a, b, e):
-    x0, x1, x2 = parabolic_select_helper(fun, a, b)
+def parabolic_interp(fun, a, b, e, n):
+    x0, x1, x2 = parabolic_select_helper(fun, a, b, n)
     i = 0
     f0 = fun(x0)
     f1 = fun(x1)
     f2 = fun(x2)
 
-    while True:
+    for _ in range(0, n):
         a1 = (f1 - f0) / (x1 - x0)
         a2 = (1 / (x2 - x1)) * (((f2 - f0) / (x2 - x0)) - ((f1 - f0) / (x1 - x0)))
         if i == 0:
@@ -94,9 +84,8 @@ def parabolic_interp(fun, a, b, e):
         else:
             X2 = 0.5 * (x0 + x1 - a1 / a2)
             if np.abs(X2 - X) < e:
-                x_min = X2
                 i += 1
-                return x_min, i
+                return X2, i
             else:
                 X = X2
         f_min = fun(X)
@@ -113,6 +102,35 @@ def parabolic_interp(fun, a, b, e):
             f1 = f_min
 
 
+def middle_point(fun_prime, a, b, e, n):
+    i = 0
+    for _ in range(0, n):
+        i += 1
+        x = (a + b) / 2
+        f_p = fun_prime(x)
+        if np.abs(f_p) < e:
+            return x, i
+        else:
+            if f_p > 0:
+                b = x
+            else:
+                a = x
+
+
+def chords(fun_prime, a, b, e, n):
+    i = 0
+    for _ in range(0, n):
+        i += 1
+        X = a - (fun_prime(a) / (fun_prime(a) - fun_prime(b))) * (a - b)
+        f_p = fun_prime(X)
+        if np.abs(f_p) < e:
+            return X, i
+        else:
+            if f_p > 0:
+                b = X
+            else:
+                a = X
+
 
 def plot(x, y, label_x="", label_y="", title=""):
     plt.plot(x, y)
@@ -123,6 +141,22 @@ def plot(x, y, label_x="", label_y="", title=""):
     plt.show()
 
 
+def newton(fun_prime, fun_second, x0, e, n):
+    x = x0
+    i = 0
+    for _ in range(0, n):
+        df = fun_prime(x)
+        ddf = fun_second(x)
+        i += 1
+        if np.abs(df) < e:
+            i += 1
+            return x, i
+        else:
+            x = x - df / ddf
+        if np.abs(x) < e:
+            return None
+
+
 def myfunc(x):
     return pow(x, 4) + pow(x, 2) + x + 1
 
@@ -131,4 +165,6 @@ def myfunc_prime(x):
     return 4 * pow(x, 3) + 2 * x + 1
 
 
-print(parabolic_interp(myfunc, -1, 0, 0.0001))
+def myfunc_second(x):
+    return 12 * pow(x, 2) + 2
+
