@@ -207,7 +207,18 @@ def newton_rafson_numeric(fun, x0, e, n):
             x = x - t * df / ddf
             i += 1
 
-
+def newton(fun_prime, fun_second, x0, e, n):
+    x = x0
+    i = 0
+    for _ in range(0, n):
+        df = fun_prime(x)
+        ddf = fun_second(x)
+        if np.abs(df) < e:
+            i += 1
+            return x, i
+        else:
+            x = x - df / ddf
+            i += 1
 
 def massive_test(fun, fun_prime, fun_second, a, b, n, x0, e_start, e_end, e_step):
     test = {}
@@ -220,6 +231,8 @@ def massive_test(fun, fun_prime, fun_second, a, b, n, x0, e_start, e_end, e_step
     test["chords"] = [[chords(fun_prime, a, b, e, n)[1], e] for e in np.arange(e_start, e_end, -e_step)]
     test["newton"] = [[newton(fun_prime, fun_second, x0, e, n)[1], e] for e in np.arange(e_start, e_end, -e_step)]
     return test
+
+
 
 
 def unpack(data):
