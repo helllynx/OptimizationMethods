@@ -158,6 +158,7 @@ def newton_numeric(fun, x0, e, n):
             return x, i
         else:
             x = x - df / ddf
+            i += 1
 
 
 def newton(fun_prime, fun_second, x0, e, n):
@@ -171,21 +172,42 @@ def newton(fun_prime, fun_second, x0, e, n):
             return x, i
         else:
             x = x - df / ddf
+            i += 1
 
-def newton_rafson(fun, fun_prime, fun_second, x0, e, n):
+
+def newton_rafson(fun_prime, fun_second, x0, e, n):
     x = x0
     i = 0
     for _ in range(0, n):
         df = fun_prime(x)
         ddf = fun_second(x)
-        i += 1
         if np.abs(df) < e:
             i += 1
             return x, i
         else:
-            x = x - df / ddf
-            nf = fun(x)
-            i+=1
+            xl = x - df / ddf
+            dfxl = fun_prime(xl)
+            t = pow(df, 2) / (pow(df, 2) + pow(dfxl, 2))
+            x = x - t * df / ddf
+            i += 1
+
+def newton_rafson_numeric(fun, x0, e, n):
+    x = x0
+    i = 0
+    for _ in range(0, n):
+        df = derivative(fun, x, n=1)
+        ddf = derivative(fun, x, n=2)
+        if np.abs(df) < e:
+            i += 1
+            return x, i
+        else:
+            xl = x - df / ddf
+            dfxl = derivative(fun, xl, n=1)
+            t = pow(df, 2) / (pow(df, 2) + pow(dfxl, 2))
+            x = x - t * df / ddf
+            i += 1
+
+
 
 def massive_test(fun, fun_prime, fun_second, a, b, n, x0, e_start, e_end, e_step):
     test = {}
@@ -242,25 +264,38 @@ def newton_test_diff_type(fun, fun_prime, fun_second, a, b, e, n):
     for x0 in np.arange(a, b, 0.01):
         newton_num[x0] = newton_numeric(fun, x0, e, n)[1]
         newton_analit[x0] = newton(fun_prime, fun_second, x0, e, n)[1]
-
     return [newton_num, newton_analit]
 
 
-# fun5 = lambda x: x * np.arctan(x) - 1 / 2 * np.log(1 + pow(x, 2))
-# d_fun5 = lambda x: np.arctan(x)
-# dd_fun5 = lambda x: 1 / (pow(x, 2) + 1)
-#
+def newton_test_rafson_diff_type(fun, fun_prime, fun_second, a, b, e, n):
+    newton_num = {}
+    newton_analit = {}
+    for x0 in np.arange(a, b, 0.01):
+        newton_num[x0] = newton_rafson_numeric(fun, x0, e, n)[1]
+        newton_analit[x0] = newton_rafson(fun_prime, fun_second, x0, e, n)[1]
+    return [newton_num, newton_analit]
+
+
+fun5 = lambda x: x * np.arctan(x) - 1 / 2 * np.log(1 + pow(x, 2))
+d_fun5 = lambda x: np.arctan(x)
+dd_fun5 = lambda x: 1 / (pow(x, 2) + 1)
+
 # x = np.arange(-1, 1, 0.001)
 # y = fun5(x)
 #
 # plot(x, y)
 #
-# x, y = zip(*sorted((newton_test_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[1]).items()))
-# plt.plot(x, y)
-# x, y = zip(*sorted((newton_test_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[0]).items()))
-# plt.plot(x, y)
+x, y = zip(*sorted((newton_test_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[1]).items()))
+plt.plot(x, y)
+x, y = zip(*sorted((newton_test_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[0]).items()))
+plt.plot(x, y)
 # plt.show()
-#
 
 
+
+x, y = zip(*sorted((newton_test_rafson_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[1]).items()))
+plt.plot(x, y)
+x, y = zip(*sorted((newton_test_rafson_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[0]).items()))
+plt.plot(x, y)
+plt.show()
 
