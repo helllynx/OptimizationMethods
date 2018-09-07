@@ -2,7 +2,7 @@ import numpy as np
 from numpy import power as pow
 import matplotlib.pyplot as plt
 from random import uniform as uni
-from mpmath import diff
+from scipy.misc import derivative
 
 
 def brute(fun, a, b, e):
@@ -166,15 +166,26 @@ def newton(fun_prime, fun_second, x0, e, n):
     for _ in range(0, n):
         df = fun_prime(x)
         ddf = fun_second(x)
-        i += 1
         if np.abs(df) < e:
             i += 1
             return x, i
         else:
             x = x - df / ddf
 
-
-
+def newton_rafson(fun, fun_prime, fun_second, x0, e, n):
+    x = x0
+    i = 0
+    for _ in range(0, n):
+        df = fun_prime(x)
+        ddf = fun_second(x)
+        i += 1
+        if np.abs(df) < e:
+            i += 1
+            return x, i
+        else:
+            x = x - df / ddf
+            nf = fun(x)
+            i+=1
 
 def massive_test(fun, fun_prime, fun_second, a, b, n, x0, e_start, e_end, e_step):
     test = {}
@@ -225,14 +236,6 @@ def myfunc_second(x):
     return 12 * pow(x, 2) + 2
 
 
-
-fun5 = lambda x: x*np.arctan(x)-1/2*np.log(1+pow(x, 2))
-d_fun5 = lambda x: np.arctan(x)
-dd_fun5 = lambda x: 1/(pow(x, 2) + 1)
-
-from scipy.misc import derivative
-
-
 def newton_test_diff_type(fun, fun_prime, fun_second, a, b, e, n):
     newton_num = {}
     newton_analit = {}
@@ -243,29 +246,21 @@ def newton_test_diff_type(fun, fun_prime, fun_second, a, b, e, n):
     return [newton_num, newton_analit]
 
 
-
-x, y = zip(*sorted((newton_test_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[1]).items()))
-plt.plot(x, y)
-x, y = zip(*sorted((newton_test_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[0]).items()))
-plt.plot(x, y)
-plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# fun5 = lambda x: x * np.arctan(x) - 1 / 2 * np.log(1 + pow(x, 2))
+# d_fun5 = lambda x: np.arctan(x)
+# dd_fun5 = lambda x: 1 / (pow(x, 2) + 1)
+#
+# x = np.arange(-1, 1, 0.001)
+# y = fun5(x)
+#
+# plot(x, y)
+#
+# x, y = zip(*sorted((newton_test_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[1]).items()))
+# plt.plot(x, y)
+# x, y = zip(*sorted((newton_test_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[0]).items()))
+# plt.plot(x, y)
+# plt.show()
+#
 
 
 
