@@ -2,6 +2,7 @@ import numpy as np
 from numpy import power as pow
 import matplotlib.pyplot as plt
 from random import uniform as uni
+from mpmath import diff
 
 
 def brute(fun, a, b, e):
@@ -145,6 +146,20 @@ def plot(x, y, label_x="", label_y="", title=""):
     plt.show()
 
 
+def newton_numeric(fun, x0, e, n):
+    x = x0
+    i = 0
+    for _ in range(0, n):
+        df = derivative(fun, x, n=1)
+        ddf = derivative(fun, x, n=2)
+        i += 1
+        if np.abs(df) < e:
+            i += 1
+            return x, i
+        else:
+            x = x - df / ddf
+
+
 def newton(fun_prime, fun_second, x0, e, n):
     x = x0
     i = 0
@@ -157,20 +172,8 @@ def newton(fun_prime, fun_second, x0, e, n):
             return x, i
         else:
             x = x - df / ddf
-        if np.abs(x) < e:
-            return None
 
 
-def myfunc(x):
-    return pow(x, 4) + pow(x, 2) + x + 1
-
-
-def myfunc_prime(x):
-    return 4 * pow(x, 3) + 2 * x + 1
-
-
-def myfunc_second(x):
-    return 12 * pow(x, 2) + 2
 
 
 def massive_test(fun, fun_prime, fun_second, a, b, n, x0, e_start, e_end, e_step):
@@ -186,11 +189,83 @@ def massive_test(fun, fun_prime, fun_second, a, b, n, x0, e_start, e_end, e_step
     return test
 
 
-data = massive_test(myfunc, myfunc_prime, myfunc_second, -1, 0, 100, -0.3, 0.001, 0.000001, 0.00001)
-vals = data.get("bitwise_search")[:]
-y = [d[0] for d in vals]
-x = [d[1] for d in vals]
-print(x,y)
+def unpack(data):
+    return [d[1] for d in data], [d[0] for d in data]
 
-plt.plot(x,y)
+
+def plot_test(data):
+    plt.style.use('ggplot')
+    x, y = unpack(data.get("bitwise_search")[:])
+    plt.plot(x, y, label="bitwise_search")
+    x, y = unpack(data.get("bisection")[:])
+    plt.plot(x, y, label="bisection")
+    x, y = unpack(data.get("gss")[:])
+    plt.plot(x, y, label="gss")
+    x, y = unpack(data.get("parabolic_interp")[:])
+    plt.plot(x, y, label="parabolic_interp")
+    x, y = unpack(data.get("middle_point")[:])
+    plt.plot(x, y, label="middle_point")
+    x, y = unpack(data.get("chords")[:])
+    plt.plot(x, y, label="chords")
+    x, y = unpack(data.get("newton")[:])
+    plt.plot(x, y, label="newton")
+    plt.legend(bbox_to_anchor=(1, 1), loc=1, borderaxespad=0.)
+    plt.show()
+
+
+def myfunc(x):
+    return pow(x, 4) + pow(x, 2) + x + 1
+
+
+def myfunc_prime(x):
+    return 4 * pow(x, 3) + 2 * x + 1
+
+
+def myfunc_second(x):
+    return 12 * pow(x, 2) + 2
+
+
+
+fun5 = lambda x: x*np.arctan(x)-1/2*np.log(1+pow(x, 2))
+d_fun5 = lambda x: np.arctan(x)
+dd_fun5 = lambda x: 1/(pow(x, 2) + 1)
+
+from scipy.misc import derivative
+
+
+def newton_test_diff_type(fun, fun_prime, fun_second, a, b, e, n):
+    newton_num = {}
+    newton_analit = {}
+    for x0 in np.arange(a, b, 0.01):
+        newton_num[x0] = newton_numeric(fun, x0, e, n)[1]
+        newton_analit[x0] = newton(fun_prime, fun_second, x0, e, n)[1]
+
+    return [newton_num, newton_analit]
+
+
+
+x, y = zip(*sorted((newton_test_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[1]).items()))
+plt.plot(x, y)
+x, y = zip(*sorted((newton_test_diff_type(fun5, d_fun5, dd_fun5, -1, 1, 0.0001, 100)[0]).items()))
+plt.plot(x, y)
 plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
