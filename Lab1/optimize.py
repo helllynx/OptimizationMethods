@@ -18,6 +18,7 @@ def bitwise_search(fun, a, b, e, bn, n):
         f0 = fun(x0)
         x1 = x0 + d
         f1 = fun(x1)
+        i += 2
         if f0 > f1:
             x0 += d
             if (x0 > b):
@@ -27,7 +28,6 @@ def bitwise_search(fun, a, b, e, bn, n):
             b = x1
             d /= bn
             x0 = a
-        i += 1
         if np.abs(f0 - f1) < e:
             break
     x_opt = (a + b) / 2
@@ -42,7 +42,7 @@ def bisection(fun_prime, a, b, e):
             i += 1
             return c, i
         elif fun_prime(a) * fun_prime(c) < 0:
-            i += 1
+            i += 2
             b = c
         else:
             a = c
@@ -58,7 +58,7 @@ def bisection_numeric(fun, diff, a, b, e):
             i += 1
             return c, i
         elif diff(fun, e, a) * diff(fun, e, c) < 0:
-            i += 1
+            i += 2
             b = c
         else:
             a = c
@@ -66,14 +66,14 @@ def bisection_numeric(fun, diff, a, b, e):
     return c, i
 
 
-def gss(fun, a, b, e=0.001):
+def gss(fun, a, b, e):
     i = 0
     gr = (np.sqrt(5) + 1) / 2  # equals 1.618....
     c = b - (b - a) / gr
     d = a + (b - a) / gr
     while abs(c - d) > e:
         if fun(c) < fun(d):
-            i += 1
+            i += 2
             b = d
         else:
             a = c
@@ -96,7 +96,7 @@ def parabolic_interp(fun, a, b, e, n):
     f0 = fun(x0)
     f1 = fun(x1)
     f2 = fun(x2)
-
+    i += 3
     for _ in range(0, n):
         a1 = (f1 - f0) / (x1 - x0)
         a2 = (1 / (x2 - x1)) * (((f2 - f0) / (x2 - x0)) - ((f1 - f0) / (x1 - x0)))
@@ -154,9 +154,9 @@ def middle_point_numeric(fun, diff, a, b, e, n):
 def chords(fun_prime, a, b, e, n):
     i = 0
     for _ in range(0, n):
-        i += 1
         X = a - (fun_prime(a) / (fun_prime(a) - fun_prime(b))) * (a - b)
         f_p = fun_prime(X)
+        i += 4
         if np.abs(f_p) < e:
             return X, i
         else:
@@ -169,9 +169,9 @@ def chords(fun_prime, a, b, e, n):
 def chords_numeric(fun, diff, a, b, e, n):
     i = 0
     for _ in range(0, n):
-        i += 1
         X = a - (diff(fun, e, a) / (diff(fun, e, a) - diff(fun, e, b))) * (a - b)
         f_p = diff(fun, e, X)
+        i += 4
         if np.abs(f_p) < e:
             return X, i
         else:
@@ -189,12 +189,12 @@ def plot(x, y, label_x="", label_y="", title=""):
     plt.show()
 
 
-def newton_numeric(fun, x0, e, n):
+def newton_numeric(fun, diff, diff2, x0, e, n):
     x = x0
     i = 0
     for _ in range(0, n):
-        df = derivative(fun, x, n=1)
-        ddf = derivative(fun, x, n=2)
+        df = diff(fun, e, x)
+        ddf = diff2(fun, e, x)
         i += 1
         if np.abs(df) < e:
             i += 1
@@ -210,12 +210,11 @@ def newton(fun_prime, fun_second, x0, e, n):
     for _ in range(0, n):
         df = fun_prime(x)
         ddf = fun_second(x)
+        i += 2
         if np.abs(df) < e:
-            i += 1
             return x, i
         else:
             x = x - df / ddf
-            i += 1
 
 def newton_numeric_diff(fun, diff, diff2, x0, e, n):
     x = x0
@@ -223,12 +222,11 @@ def newton_numeric_diff(fun, diff, diff2, x0, e, n):
     for _ in range(0, n):
         df = diff(fun, e, x)
         ddf = diff2(fun, e, x)
+        i += 2
         if np.abs(df) < e:
-            i += 1
             return x, i
         else:
             x = x - df / ddf
-            i += 1
 
 def newton_rafson(fun_prime, fun_second, x0, e, n):
     x = x0
@@ -247,18 +245,18 @@ def newton_rafson(fun_prime, fun_second, x0, e, n):
             i += 1
 
 
-def newton_rafson_numeric(fun, x0, e, n):
+def newton_rafson_numeric(fun, diff, diff2, x0, e, n):
     x = x0
     i = 0
     for _ in range(0, n):
-        df = derivative(fun, x, n=1)
-        ddf = derivative(fun, x, n=2)
+        df = diff(fun, e, x)
+        ddf = diff2(fun, e, x)
         if np.abs(df) < e:
             i += 1
             return x, i
         else:
             xl = x - df / ddf
-            dfxl = derivative(fun, xl, n=1)
+            dfxl = diff(fun, e, xl)
             t = pow(df, 2) / (pow(df, 2) + pow(dfxl, 2))
             x = x - t * df / ddf
             i += 1
@@ -285,14 +283,14 @@ def newton_markvardt(fun, fun_prime, fun_second, x0, e, n):
             mu = mu * 2
 
 
-def newton_markvardt_numeric(fun, x0, e, n):
+def newton_markvardt_numeric(fun, diff, diff2, x0, e, n):
     x = x0
     i = 0
     f = fun(x)
-    mu = derivative(fun, x, n=2)
+    mu = diff2(fun, e, x)
     for _ in range(0, n):
-        df = derivative(fun, x, n=1)
-        ddf = derivative(fun, x, n=2)
+        df = diff(fun, e, x)
+        ddf = diff2(fun, e, x)
         if np.abs(df) < e:
             i += 1
             return x, i
@@ -392,41 +390,41 @@ def right(fun, h, x):
     return (fun(x + h) - fun(x)) / h
 
 
-def newton_test_diff_type(fun, fun_prime, fun_second, a, b, e, n):
+def newton_test_diff_type(fun, fun_prime, fun_second, diff, diff2, a, b, e, n):
     newton_num = {}
     newton_analit = {}
     for x0 in np.arange(a, b, 0.01):
-        newton_num[x0] = newton_numeric(fun, x0, e, n)[1]
+        newton_num[x0] = newton_numeric_diff(fun, diff, diff2, x0, e, n)[1]
         newton_analit[x0] = newton(fun_prime, fun_second, x0, e, n)[1]
     return [newton_num, newton_analit]
 
 
-def newton_test_rafson_diff_type(fun, fun_prime, fun_second, a, b, e, n):
+def newton_test_rafson_diff_type(fun, fun_prime, fun_second, diff, diff2, a, b, e, n):
     newton_num = {}
     newton_analit = {}
     for x0 in np.arange(a, b, 0.01):
-        newton_num[x0] = newton_rafson_numeric(fun, x0, e, n)[1]
+        newton_num[x0] = newton_rafson_numeric(fun, diff, diff2, x0, e, n)[1]
         newton_analit[x0] = newton_rafson(fun_prime, fun_second, x0, e, n)[1]
     return [newton_num, newton_analit]
 
 
-def newton_test_markvardt_diff_type(fun, fun_prime, fun_second, a, b, e, n):
+def newton_test_markvardt_diff_type(fun, fun_prime, fun_second, diff, diff2, a, b, e, n):
     newton_num = {}
     newton_analit = {}
     for x0 in np.arange(a, b, 0.01):
-        newton_num[x0] = newton_markvardt_numeric(fun, x0, e, n)[1]
+        newton_num[x0] = newton_markvardt_numeric(fun, diff, diff2, x0, e, n)[1]
         newton_analit[x0] = newton_markvardt(fun, fun_prime, fun_second, x0, e, n)[1]
     return [newton_num, newton_analit]
 
 
-def broken_lines(fun, u0, e, l):
-    A = u0(1)
-    B = u0(2)
-
-    fA = fun(A)
-    fB = fun(B)
-    x0 = 1/(2*l)*(fA-fB+l*(A+B))
-    y0 = 1/2*(fA+fB+l*(A-B))
+# def broken_lines(fun, u0, e, l):
+#     A = u0(1)
+#     B = u0(2)
+#
+#     fA = fun(A)
+#     fB = fun(B)
+#     x0 = 1/(2*l)*(fA-fB+l*(A+B))
+#     y0 = 1/2*(fA+fB+l*(A-B))
 
 
 
@@ -436,18 +434,6 @@ def fun6_1(x):
 
 def fun6_2(x):
     return 1/10*x+2*np.sin(4*x)
-
-
-x = np.arange(1,12, 0.01)
-y = fun6_1(x)
-plt.plot(x,y)
-x = np.arange(0,4, 0.01)
-y = fun6_2(x)
-plt.plot(x,y)
-plt.show()
-
-print(brute(fun6_1, 1, 12, 0.001))
-print(brute(fun6_2, 0, 4, 0.001))
 
 
 
