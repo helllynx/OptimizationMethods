@@ -7,7 +7,7 @@ from scipy.misc import derivative
 
 def brute(fun, a, b, e):
     x = np.arange(a, b, e)
-    return np.min(fun(x)), x.size
+    return x[np.argmin(fun(x))], x.size
 
 
 def bitwise_search(fun, a, b, e, bn, n):
@@ -417,4 +417,39 @@ def newton_test_markvardt_diff_type(fun, fun_prime, fun_second, a, b, e, n):
         newton_num[x0] = newton_markvardt_numeric(fun, x0, e, n)[1]
         newton_analit[x0] = newton_markvardt(fun, fun_prime, fun_second, x0, e, n)[1]
     return [newton_num, newton_analit]
+
+
+def broken_lines(fun, u0, e, l):
+    A = u0(1)
+    B = u0(2)
+
+    fA = fun(A)
+    fB = fun(B)
+    x0 = 1/(2*l)*(fA-fB+l*(A+B))
+    y0 = 1/2*(fA+fB+l*(A-B))
+
+
+
+def fun6_1(x):
+    return np.cos(x)/pow(x,2)
+
+
+def fun6_2(x):
+    return 1/10*x+2*np.sin(4*x)
+
+
+x = np.arange(1,12, 0.01)
+y = fun6_1(x)
+plt.plot(x,y)
+x = np.arange(0,4, 0.01)
+y = fun6_2(x)
+plt.plot(x,y)
+plt.show()
+
+print(brute(fun6_1, 1, 12, 0.001))
+print(brute(fun6_2, 0, 4, 0.001))
+
+
+
+
 
