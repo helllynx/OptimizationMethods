@@ -2,7 +2,6 @@ import numpy as np
 from numpy import power as pow
 import matplotlib.pyplot as plt
 from random import uniform as uni
-from scipy.misc import derivative
 
 
 def brute(fun, a, b, e):
@@ -10,10 +9,12 @@ def brute(fun, a, b, e):
     return x[np.argmin(fun(x))], x.size
 
 
-def bitwise_search(fun, a, b, e, bn, n):
+def bitwise_search(fun, a, b, e, bn, n, need_plot=False):
     d = (b - a) / bn
     x0 = a
+    x0_p = x0
     i = 0
+    f0_p = fun(x0)
     for _ in range(0, n):
         f0 = fun(x0)
         x1 = x0 + d
@@ -21,7 +22,7 @@ def bitwise_search(fun, a, b, e, bn, n):
         i += 2
         if f0 > f1:
             x0 += d
-            if (x0 > b):
+            if x0 > b:
                 raise Exception("Most likely your function is not unimodal")
         else:
             a = x1 - 2 * d
@@ -30,9 +31,30 @@ def bitwise_search(fun, a, b, e, bn, n):
             x0 = a
         if np.abs(f0 - f1) < e:
             break
+        if need_plot:
+            plt.plot([x0_p, x0], [f0_p, f1])
     x_opt = (a + b) / 2
     return x_opt, i
 
+
+def bitwise_search2(fun, a, b, e, d, n, need_plot=False):
+    x = a
+    f2 = fun(x)
+    n = 1
+    old_x = x
+    old_f = f2
+
+    while not np.abs(d * eta) < e:
+        x, f2, n = iteration_striking_search(f, x, delta, f2, n)
+
+        if verbose:
+            plt.plot([old_x, x], [old_f, f2])
+            old_x = x
+            old_f = f2
+
+        delta /= eta
+
+    return x - delta * eta, f2, n
 
 def bisection(fun_prime, a, b, e):
     i = 0
@@ -137,6 +159,7 @@ def middle_point(fun_prime, a, b, e, n):
             else:
                 a = x
 
+
 def middle_point_numeric(fun, diff, a, b, e, n):
     i = 0
     for _ in range(0, n):
@@ -151,34 +174,16 @@ def middle_point_numeric(fun, diff, a, b, e, n):
             else:
                 a = x
 
-def chords(fun_prime, a, b, e, n):
-    i = 0
-    for _ in range(0, n):
-        X = a - (fun_prime(a) / (fun_prime(a) - fun_prime(b))) * (a - b)
-        f_p = fun_prime(X)
-        i += 4
-        if np.abs(f_p) < e:
-            return X, i
-        else:
-            if f_p > 0:
-                b = X
-            else:
-                a = X
 
-
-def chords_numeric(fun, diff, a, b, e, n):
+def chords(fun_prime, a, b, e):
     i = 0
-    for _ in range(0, n):
-        X = a - (diff(fun, e, a) / (diff(fun, e, a) - diff(fun, e, b))) * (a - b)
-        f_p = diff(fun, e, X)
-        i += 4
-        if np.abs(f_p) < e:
-            return X, i
-        else:
-            if f_p > 0:
-                b = X
-            else:
-                a = X
+    while np.fabs(b - a) > e:
+        tmp = b
+        b = b - (b - a) * fun_prime(b) / (fun_prime(b) - fun_prime(a))
+        a = tmp
+        i += 1
+    return b, i
+
 
 def plot(x, y, label_x="", label_y="", title=""):
     plt.plot(x, y)
@@ -216,6 +221,7 @@ def newton(fun_prime, fun_second, x0, e, n):
         else:
             x = x - df / ddf
 
+
 def newton_numeric_diff(fun, diff, diff2, x0, e, n):
     x = x0
     i = 0
@@ -227,6 +233,7 @@ def newton_numeric_diff(fun, diff, diff2, x0, e, n):
             return x, i
         else:
             x = x - df / ddf
+
 
 def newton_rafson(fun_prime, fun_second, x0, e, n):
     x = x0
@@ -320,10 +327,13 @@ def massive_test(fun, fun_prime, fun_second, a, b, n, x0, e_start, e_end, e_step
 def massive_test_diff(fun, diff, diff2, a, b, n, x0, e_start, e_end, e_step):
     test = {}
     test["bisection"] = [[bisection_numeric(fun, diff, a, b, e)[1], e] for e in np.arange(e_start, e_end, -e_step)]
-    test["middle_point"] = [[middle_point_numeric(fun, diff, a, b, e, n)[1], e] for e in np.arange(e_start, e_end, -e_step)]
-    test["chords"] = [[chords_numeric(fun, diff, a, b, e, n)[1], e] for e in np.arange(e_start, e_end, -e_step)]
-    test["newton"] = [[newton_numeric_diff(fun, diff, diff2, x0, e, n)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["middle_point"] = [[middle_point_numeric(fun, diff, a, b, e, n)[1], e] for e in
+                            np.arange(e_start, e_end, -e_step)]
+    test["chords"] = [[chords(diff, a, b, e)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["newton"] = [[newton_numeric_diff(fun, diff, diff2, x0, e, n)[1], e] for e in
+                      np.arange(e_start, e_end, -e_step)]
     return test
+
 
 def unpack(data):
     return [d[1] for d in data], [d[0] for d in data]
@@ -361,6 +371,7 @@ def plot_test_diff(data):
     plt.plot(x, y, label="newton")
     plt.legend(bbox_to_anchor=(1, 1), loc=1, borderaxespad=0.)
     plt.show()
+
 
 def myfunc(x):
     return pow(x, 4) + pow(x, 2) + x + 1
@@ -427,15 +438,23 @@ def newton_test_markvardt_diff_type(fun, fun_prime, fun_second, diff, diff2, a, 
 #     y0 = 1/2*(fA+fB+l*(A-B))
 
 
-
 def fun6_1(x):
-    return np.cos(x)/pow(x,2)
+    return np.cos(x) / pow(x, 2)
 
 
 def fun6_2(x):
-    return 1/10*x+2*np.sin(4*x)
+    return 1 / 10 * x + 2 * np.sin(4 * x)
 
 
+a = -1
+b = 0
+e = 0.001
+
+x = np.arange(a, b, e)
+y = myfunc(x)
 
 
-
+bitwise_search(myfunc, a, b, e, 4, 20, True)
+plt.plot(x, y)
+plt.grid(True)
+plt.show()
