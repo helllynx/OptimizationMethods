@@ -220,6 +220,17 @@ def chords(fun, fun_prime, a, b, e, need_plot=False):
             plt.plot([a, b], [fun(a), fun(b)])
     return b, i
 
+def chords_numeric(fun, diff, a, b, e, need_plot=False):
+    i = 0
+    while np.fabs(b - a) > e:
+        tmp = b
+        b = b - (b - a) * diff(fun, e, b) / (diff(fun, e, b) - diff(fun, e, a))
+        a = tmp
+        i += 1
+        if need_plot:
+            plt.plot([a, b], [fun(a), fun(b)])
+    return b, i
+
 
 def plot(x, y, label_x="", label_y="", title=""):
     plt.plot(x, y)
@@ -249,6 +260,8 @@ def newton_numeric(fun, diff, diff2, x0, e, n, need_plot=False):
     x = x0
     i = 0
     for _ in range(0, n):
+        if need_plot:
+            plt.scatter(x, fun(x))
         df = diff(fun, e, x)
         ddf = diff2(fun, e, x)
         i += 1
@@ -264,6 +277,8 @@ def newton_numeric_diff(fun, diff, diff2, x0, e, n, need_plot=False):
     x = x0
     i = 0
     for _ in range(0, n):
+        if need_plot:
+            plt.scatter(x, fun(x))
         df = diff(fun, e, x)
         ddf = diff2(fun, e, x)
         i += 2
@@ -277,6 +292,8 @@ def newton_rafson(fun_prime, fun_second, x0, e, n, need_plot=False):
     x = x0
     i = 0
     for _ in range(0, n):
+        if need_plot:
+            plt.scatter(x, fun(x))
         df = fun_prime(x)
         ddf = fun_second(x)
         if np.abs(df) < e:
@@ -294,6 +311,8 @@ def newton_rafson_numeric(fun, diff, diff2, x0, e, n, need_plot=False):
     x = x0
     i = 0
     for _ in range(0, n):
+        if need_plot:
+            plt.scatter(x, fun(x))
         df = diff(fun, e, x)
         ddf = diff2(fun, e, x)
         if np.abs(df) < e:
@@ -313,6 +332,8 @@ def newton_markvardt(fun, fun_prime, fun_second, x0, e, n, need_plot=False):
     f = fun(x)
     mu = fun_second(x)
     for _ in range(0, n):
+        if need_plot:
+            plt.scatter(x, fun(x))
         df = fun_prime(x)
         ddf = fun_second(x)
         if np.abs(df) < e:
@@ -334,6 +355,8 @@ def newton_markvardt_numeric(fun, diff, diff2, x0, e, n, need_plot=False):
     f = fun(x)
     mu = diff2(fun, e, x)
     for _ in range(0, n):
+        if need_plot:
+            plt.scatter(x, fun(x))
         df = diff(fun, e, x)
         ddf = diff2(fun, e, x)
         if np.abs(df) < e:
@@ -351,7 +374,7 @@ def newton_markvardt_numeric(fun, diff, diff2, x0, e, n, need_plot=False):
 
 def massive_test(fun, fun_prime, fun_second, a, b, n, x0, e_start, e_end, e_step, need_plot=False):
     test = {}
-    test["bitwise_search"] = [[bitwise_search(fun, a, b, e, 0.25, -4, need_plot)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    # test["bitwise_search"] = [[bitwise_search(fun, a, b, 10**(-e), 0.25, -4, need_plot)[1], 10**(-e)] for e in np.arange(e_start, e_end, dtype=float)]
     test["brute"] = [[brute(fun, a, b, e, )[1], e] for e in np.arange(e_start, e_end, -e_step)]
     test["bisection"] = [[bisection(fun, fun_prime, a, b, e, need_plot)[1], e] for e in np.arange(e_start, e_end, -e_step)]
     test["gss"] = [[gss(fun, a, b, e, need_plot)[1], e] for e in np.arange(e_start, e_end, -e_step)]
@@ -362,13 +385,13 @@ def massive_test(fun, fun_prime, fun_second, a, b, n, x0, e_start, e_end, e_step
     return test
 
 
-def massive_test_diff(fun, diff, diff2, a, b, n, x0, e_start, e_end, e_step):
+def massive_test_diff(fun, diff, diff2, a, b, n, x0, e_start, e_end, e_step, need_plot=False):
     test = {}
-    test["bisection"] = [[bisection_numeric(fun, diff, a, b, e)[1], e] for e in np.arange(e_start, e_end, -e_step)]
-    test["middle_point"] = [[middle_point_numeric(fun, diff, a, b, e, n)[1], e] for e in
+    test["bisection"] = [[bisection_numeric(fun, diff, a, b, e, need_plot)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["middle_point"] = [[middle_point_numeric(fun, diff, a, b, e, n, need_plot)[1], e] for e in
                             np.arange(e_start, e_end, -e_step)]
-    test["chords"] = [[chords(diff, a, b, e)[1], e] for e in np.arange(e_start, e_end, -e_step)]
-    test["newton"] = [[newton_numeric_diff(fun, diff, diff2, x0, e, n)[1], e] for e in
+    test["chords"] = [[chords_numeric(fun, diff, a, b, e, need_plot)[1], e] for e in np.arange(e_start, e_end, -e_step)]
+    test["newton"] = [[newton_numeric_diff(fun, diff, diff2, x0, e, n, need_plot)[1], e] for e in
                       np.arange(e_start, e_end, -e_step)]
     return test
 
@@ -379,8 +402,9 @@ def unpack(data):
 
 def plot_test(data):
     plt.style.use('ggplot')
-    x, y = unpack(data.get("bitwise_search")[:])
-    plt.plot(x, y, label="bitwise_search")
+    plt.gca().invert_xaxis()
+    # x, y = unpack(data.get("bitwise_search")[:])
+    # plt.plot(x, y, label="bitwise_search")
     x, y = unpack(data.get("bisection")[:])
     plt.plot(x, y, label="bisection")
     x, y = unpack(data.get("gss")[:])
@@ -399,6 +423,7 @@ def plot_test(data):
 
 def plot_test_diff(data):
     plt.style.use('ggplot')
+    plt.gca().invert_xaxis()
     x, y = unpack(data.get("bisection")[:])
     plt.plot(x, y, label="bisection")
     x, y = unpack(data.get("middle_point")[:])
@@ -485,3 +510,6 @@ def plot_main_func(a, b, e=0.001):
 a = -1
 b = 0
 e = 0.001
+
+# plot_test_diff(massive_test_diff(myfunc, center, center_second, a, b, 20, -0.8, 0.01, 0.001, 0.001, False))
+plot_test(massive_test(myfunc, myfunc_prime, myfunc_second, a, b, 20, -0.8, 0.01, 0.001, 0.002, False))
