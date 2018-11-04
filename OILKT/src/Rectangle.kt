@@ -24,28 +24,38 @@ fun getDistance(p1: Point, p2: Point): Float {
 
 fun upperRectangleFunction(rect: Rectangle, x: Float): Float {
     if (rect.left() > x || rect.right() < x) {
-        throw Exception("The requested point lies outside of the rectangle")
+//        throw Exception("The requested point lies outside of the rectangle: x: $x  left: ${rect.left()}  right: ${rect.right()}")
+        return 0f
     }
     return rect.top()
 }
 
 fun lowerRectangleFunction(rect: Rectangle, x: Float): Float {
     if (rect.left() > x || rect.right() < x) {
-        throw Exception("The requested point lies outside of the rectangle")
+//        throw Exception("The requested point lies outside of the rectangle: x: $x  left: ${rect.left()}  right: ${rect.right()}")
+        return 0f
+
     }
     return rect.bottom()
 }
 
 fun upperCircleFunction(m: Point, r: Float, x: Float): Float {
-    if (m.x - r > x || m.x + r < x) {
-        throw Exception("The requested point lies outside of the circle")
+    if (RoundToDecimal(m.x - r) > x || RoundToDecimal(m.x + r) < x) {
+//        throw Exception("The requested point lies outside of the circle: $x  m.x: ${m.x}  r: $r")
+        return 0f
     }
     return (m.y - Math.sqrt((r * r) - Math.pow(((x - m.x).toDouble()), 2.0))).toFloat()
 }
 
 fun lowerCircleFunction(m: Point, r: Float, x: Float): Float {
-    if (m.x - r > x || m.x + r < x) {
-        throw Exception("The requested point lies outside of the circle")
+    if (RoundToDecimal(m.x - r) > x || RoundToDecimal(m.x + r) < x) {
+//        throw Exception("The requested point lies outside of the circle: $x  m.x: ${m.x}  r: $r")
+        return 0f
+
     }
     return (m.y + Math.sqrt((r * r) - Math.pow(((x - m.x).toDouble()), 2.0))).toFloat()
+}
+
+fun RoundToDecimal(d: Float): Float {
+    return Math.round(d * 1000) / 1000f
 }

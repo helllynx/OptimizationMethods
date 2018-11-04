@@ -1,10 +1,10 @@
 import math
+from random import uniform
+
+size = 1_000_000
 
 
-size = 1_000_00
-
-
-s = " ".join(map(str, range(1, size+1)))
+s = " ".join(map(str, [round(uniform(0.1, 1.0), 6) for _ in range(size)]))
 
 size = math.sqrt(size)
 
