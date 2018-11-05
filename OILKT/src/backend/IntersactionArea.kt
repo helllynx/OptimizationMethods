@@ -12,29 +12,29 @@ fun intersectionArea(rect: Rectangle, circle: Circle): Float {
     var rightBound = 0.0f
 
     //TODO mey be refactor this bullshit
-    if (rect.bottom() < circle.y && rect.right() < circle.x && backend.getDistance(
-            backend.Point(
-                rect.bottom(),
-                rect.right()
-            ), circle
-        ) > circle.r ||
-        rect.top() > circle.y && rect.right() < circle.x && backend.getDistance(
-            backend.Point(rect.top(), rect.right()),
-            circle
-        ) > circle.r ||
-        rect.bottom() < circle.y && rect.left() > circle.x && backend.getDistance(
-            backend.Point(
-                rect.bottom(),
-                rect.left()
-            ), circle
-        ) > circle.r ||
-        rect.top() > circle.y && rect.left() > circle.x && backend.getDistance(
-            backend.Point(rect.top(), rect.left()),
-            circle
-        ) > circle.r
-    ) {
-        return 0.0f
-    }
+//    if (rect.bottom() < circle.y && rect.right() < circle.x && backend.getDistance(
+//            backend.Point(
+//                rect.bottom(),
+//                rect.right()
+//            ), circle
+//        ) > circle.r ||
+//        rect.top() > circle.y && rect.right() < circle.x && backend.getDistance(
+//            backend.Point(rect.top(), rect.right()),
+//            circle
+//        ) > circle.r ||
+//        rect.bottom() < circle.y && rect.left() > circle.x && backend.getDistance(
+//            backend.Point(
+//                rect.bottom(),
+//                rect.left()
+//            ), circle
+//        ) > circle.r ||
+//        rect.top() > circle.y && rect.left() > circle.x && backend.getDistance(
+//            backend.Point(rect.top(), rect.left()),
+//            circle
+//        ) > circle.r
+//    ) {
+//        return 0.0f
+//    }
 
     //A variable storing the nearest horizontal edge of the rectangle.
     //Determine what is nearer to the circle center - the rectangle top edge or the rectangle bottom edge
