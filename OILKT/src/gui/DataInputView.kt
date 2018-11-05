@@ -1,8 +1,9 @@
 package gui
 
 import backend.Circle
-import backend.OilMap
+import backend.Data
 import backend.calculate
+import backend.massiveTest
 import javafx.collections.FXCollections
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonBar
@@ -52,13 +53,19 @@ class DataInputView : View() {
                                 )
                             } else {
                                 requestView.circles.add(Circle(x.text.toFloat(), y.text.toFloat(), r.text.toFloat()))
-                                OilMap.inputData.add(Circle(x.text.toFloat(), y.text.toFloat(), r.text.toFloat()))
+                                Data.inputData.add(Circle(x.text.toFloat(), y.text.toFloat(), r.text.toFloat()))
                             }
                         }
                     }
                     button("Start calculation") {
                         action {
-                            calculate(OilMap.inputData)
+                            calculate(Data.inputData)
+                            replaceWith<OutDataListView>()
+                        }
+                    }
+                    button("Start auto test") {
+                        action {
+                            massiveTest()
                             replaceWith<OutDataListView>()
                         }
                     }
@@ -79,7 +86,5 @@ class DataInputView : View() {
             column("y", Circle::y)
             column("r", Circle::r)
         }
-
-
     }
 }

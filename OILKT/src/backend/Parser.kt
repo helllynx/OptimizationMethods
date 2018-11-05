@@ -37,5 +37,5 @@ fun parse(pathToFile: String): OilMap {
         index+=sizeX
     }
 
-    return OilMap(arrayData, oilMapType, height, width)
+    return OilMap(arrayData, oilMapType, height, width, sizeX)
 }

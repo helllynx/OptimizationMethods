@@ -1,6 +1,7 @@
 package backend
 
 import kotlin.math.abs
+import kotlin.math.round
 
 fun intersectionArea(rect: Rectangle, circle: Circle): Float {
     var area = 0.0f
@@ -11,13 +12,29 @@ fun intersectionArea(rect: Rectangle, circle: Circle): Float {
     var rightBound = 0.0f
 
     //TODO mey be refactor this bullshit
-//    if (rect.bottom() < circle.y && rect.right() < circle.x && backend.getDistance(backend.Point(rect.bottom(), rect.right()), circle) > r ||
-//        rect.top() > circle.y && rect.right() < circle.x && backend.getDistance(backend.Point(rect.top(), rect.right()), circle) > circle.r ||
-//        rect.bottom() < circle.y && rect.left() > circle.x && backend.getDistance(backend.Point(rect.bottom(), rect.left()), circle) > circle.r ||
-//        rect.top() > circle.y && rect.left() > circle.x && backend.getDistance(backend.Point(rect.top(), rect.left()), circle) > circle.r
-//    ) {
-//        return 0.0f
-//    }
+    if (rect.bottom() < circle.y && rect.right() < circle.x && backend.getDistance(
+            backend.Point(
+                rect.bottom(),
+                rect.right()
+            ), circle
+        ) > circle.r ||
+        rect.top() > circle.y && rect.right() < circle.x && backend.getDistance(
+            backend.Point(rect.top(), rect.right()),
+            circle
+        ) > circle.r ||
+        rect.bottom() < circle.y && rect.left() > circle.x && backend.getDistance(
+            backend.Point(
+                rect.bottom(),
+                rect.left()
+            ), circle
+        ) > circle.r ||
+        rect.top() > circle.y && rect.left() > circle.x && backend.getDistance(
+            backend.Point(rect.top(), rect.left()),
+            circle
+        ) > circle.r
+    ) {
+        return 0.0f
+    }
 
     //A variable storing the nearest horizontal edge of the rectangle.
     //Determine what is nearer to the circle center - the rectangle top edge or the rectangle bottom edge
@@ -27,8 +44,9 @@ fun intersectionArea(rect: Rectangle, circle: Circle): Float {
         rect.top()
     }
 
+    // TODO need refactor this code, because leftBound sometimes takes value gather than right that is not correct
     if (circle.y >= rect.top() && circle.y <= rect.bottom()) {
-        //Take care if the circle's center lies within the rectangle.
+//        Take care if the circle's center lies within the rectangle.
         leftBound = Math.max(-circle.r + circle.x, rect.left())
         rightBound = Math.min(circle.r + circle.x, rect.right())
     } else if (circle.r >= (Math.abs(nearestRectangleEdge - circle.y))) {
@@ -55,9 +73,9 @@ fun intersectionArea(rect: Rectangle, circle: Circle): Float {
         )
     }
 
-    var i = leftBound + resolution / 2
+    var i = leftBound + resolution
 
-    do {
+    while (i <= rightBound) {
         upperBound = Math.max(
             upperRectangleFunction(rect, i - resolution / 2),
             upperCircleFunction(circle, i - resolution / 2)
@@ -68,7 +86,7 @@ fun intersectionArea(rect: Rectangle, circle: Circle): Float {
         )
         area += abs(lowerBound - upperBound) * resolution
         i += resolution
-    } while (i < rightBound)
+    }
 
     return area
 }
@@ -84,6 +102,25 @@ fun testIntersectionAreaCalculation(x: Float, y: Float, width: Float, height: Fl
             circle
         )}"
     )
+}
+
+fun massiveTest() {
+    val n = Data.importOilMap.size / 10
+    for (i in 1..n step 1) {
+        val r = round((Math.random() * i * 10).toFloat())
+        val x = r + round((Math.random() * i)).toFloat()
+        val y = r + round(Math.random() * i).toFloat()
+        val c = Circle(x, y, r)
+
+        Data.inputData.add(c)
+        Data.outputData.add(
+            AreaOutType(
+                c,
+                Data.importOilMap.getIntersectRectanglesArea(c, Data.importOilMap),
+                (Math.pow(r.toDouble(), 2.0) * Math.PI).toFloat()
+            )
+        )
+    }
 }
 
 
