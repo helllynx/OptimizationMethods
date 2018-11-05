@@ -1,5 +1,7 @@
-import java.nio.file.Paths
+package backend
+
 import java.nio.file.Files
+import java.nio.file.Paths
 
 fun readFile(fileName: String): ArrayList<String> {
     val data: ArrayList<String> = ArrayList()
@@ -11,16 +13,16 @@ fun readFile(fileName: String): ArrayList<String> {
     return data
 }
 
-fun parse(pathToFile: String): Map {
+fun parse(pathToFile: String): OilMap {
     val data: ArrayList<String> = readFile(pathToFile)
-    val mapType: Map.MapType
+    val oilMapType: OilMap.MapType
     val arrayData: ArrayList<FloatArray> = ArrayList()
 
 
-    mapType = if (data[0] == "OIL") {
-        Map.MapType.OIL
+    oilMapType = if (data[0] == "OIL") {
+        OilMap.MapType.OIL
     } else  {
-        Map.MapType.PORO
+        OilMap.MapType.PORO
     }
 
     val sizeX = data[1].split(" ")[0].toInt()
@@ -35,5 +37,5 @@ fun parse(pathToFile: String): Map {
         index+=sizeX
     }
 
-    return Map(arrayData, mapType, height, width)
+    return OilMap(arrayData, oilMapType, height, width)
 }
