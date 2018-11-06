@@ -11,6 +11,7 @@ import tornadofx.*
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import kotlin.system.measureNanoTime
 
 class FileImportView : View() {
     private val fileTypeFilterTXT = arrayOf(FileChooser.ExtensionFilter("Data files (*.txt, *.bin)", "*.txt", "*.bin"))
@@ -25,7 +26,8 @@ class FileImportView : View() {
                 files = chooseFile("Open ", fileTypeFilterTXT)
                 file = if (files.isEmpty()) "" else files[0].absolutePath
                 if (!file.isEmpty()) {
-                    Data.importOilMap = backend.parse(file)
+                    println("started")
+                    measureNanoTime { Data.importOilMap = backend.parse(file) }.apply(::println)
                     val outputFS = Output(FileOutputStream(file.substring(file.lastIndexOf("/") + 1) + ".bin"))
                     kryo.writeObject(outputFS, Data.importOilMap)
                     outputFS.close()

@@ -16,12 +16,10 @@ fun readFile(fileName: String): ArrayList<String> {
 fun parse(pathToFile: String): OilMap {
     val data: ArrayList<String> = readFile(pathToFile)
     val oilMapType: OilMap.MapType
-    val arrayData: ArrayList<FloatArray> = ArrayList()
-
 
     oilMapType = if (data[0] == "OIL") {
         OilMap.MapType.OIL
-    } else  {
+    } else {
         OilMap.MapType.PORO
     }
 
@@ -30,12 +28,20 @@ fun parse(pathToFile: String): OilMap {
     val height = data[2].split(" ")[1].toInt()
     val width = data[2].split(" ")[1].toInt()
 
-    var index = 0
+    println("started")
 
-    for (i in 0 until sizeY){
-        arrayData.add(data[3].split(" ").subList(index, index+sizeX).map { it.trim().toFloat() }.toFloatArray())
-        index+=sizeX
-    }
+    val arrayData = data[3]
+        .split(" ")
+        .map {it.toFloat()}
+        .windowed(sizeX, sizeX)
+        .toCollection(ArrayList(sizeX * sizeY))
+
+    /*var index = 0
+
+    repeat(sizeY) {
+        arrayData.add(data[3].split(" ").subList(index, index + sizeX).map { it.trim().toFloat() }.toFloatArray())
+        index += sizeX
+    }*/
 
     return OilMap(arrayData, oilMapType, height, width, sizeX)
 }

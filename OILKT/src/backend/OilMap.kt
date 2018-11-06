@@ -10,34 +10,13 @@ class Data {
     }
 }
 
-class OilMap {
-    var array: ArrayList<FloatArray>
-    var mapType: MapType
-    var height: Int
-    var width: Int
-    var size: Int
-
-    constructor(
-        array: ArrayList<FloatArray>,
-        mapType: MapType,
-        height: Int,
-        width: Int,
-        size: Int
-    ) {
-        this.array = array
-        this.mapType = mapType
-        this.height = height
-        this.width = width
-        this.size = size
-    }
-
-    constructor() {
-        this.array = ArrayList()
-        this.mapType = MapType.OIL
-        this.height = 0
-        this.width = 0
-        this.size = 0
-    }
+class OilMap(
+    var array: List<List<Float>> = listOf(),
+    var mapType: MapType = MapType.OIL,
+    var height: Int = 0,
+    var width: Int = 0,
+    var size: Int = 0
+) {
 
     enum class MapType { OIL, PORO }
 
@@ -66,13 +45,12 @@ class OilMap {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        println(count)
         return area
     }
 }
 
 fun calculate(circles: ArrayList<Circle>) {
-    for (c in circles) {
+    circles.forEach { c ->
         Data.outputData.add(
             AreaOutType(
                 c,
