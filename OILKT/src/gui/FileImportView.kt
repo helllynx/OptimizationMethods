@@ -14,8 +14,8 @@ import java.io.FileOutputStream
 import kotlin.system.measureNanoTime
 
 class FileImportView : View() {
-    private val fileTypeFilterTXT = arrayOf(FileChooser.ExtensionFilter("Data files (*.txt, *.bin)", "*.txt", "*.bin"))
-    private val fileTypeFilterBIN = arrayOf(FileChooser.ExtensionFilter("Data files (*.txt, *.bin)", "*.txt", "*.bin"))
+    private val fileTypeFilterTXT = arrayOf(FileChooser.ExtensionFilter("Data files (*.txt)", "*.txt"))
+    private val fileTypeFilterBIN = arrayOf(FileChooser.ExtensionFilter("Data files (*.bin)", "*.bin"))
     private lateinit var file: String
     private lateinit var files: List<File>
 
@@ -32,6 +32,7 @@ class FileImportView : View() {
                     kryo.writeObject(outputFS, Data.importOilMap)
                     outputFS.close()
                     println("Read txt map: $file")
+//                    openInternalWindow(DataInputView::class,modal = false)
                     replaceWith<DataInputView>()
                 } else {
                     alert(
@@ -55,6 +56,7 @@ class FileImportView : View() {
                     Data.importOilMap = kryo.readObject(inputFS, backend.OilMap::class.java)
                     inputFS.close()
                     println("Import serialized map: $file")
+//                    openInternalWindow(DataInputView::class,modal = false)
                     replaceWith<DataInputView>()
                 } else {
                     alert(
@@ -68,5 +70,23 @@ class FileImportView : View() {
                 }
             }
         }
+//        button("Enter circles") {
+//            action {
+//                if (Data.importOilMap.size != 0)
+//                {
+//                    openInternalWindow(DataInputView::class,modal = false)
+//                } else {
+//                    alert(
+//                        type = Alert.AlertType.ERROR,
+//                        header = "Please select file with data before push this fucking button!",
+//                        actionFn = { btnType ->
+//                            if (btnType.buttonData == ButtonBar.ButtonData.OK_DONE) {
+//                            }
+//                        }
+//                    )
+//                }
+//
+//            }
+//        }
     }
 }

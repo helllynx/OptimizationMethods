@@ -1,5 +1,6 @@
 package backend
 
+import kotlin.math.min
 import kotlin.math.round
 
 class Rectangle(var x: Float, var y: Float, var width: Float, var height: Float) {
@@ -63,4 +64,38 @@ fun lowerCircleFunction(c: Circle, x: Float): Float {
         return 0f
     }
     return (c.y + Math.sqrt((c.r * c.r) - Math.pow(((x - c.x).toDouble()), 2.0))).toFloat()
+}
+
+fun checkAll(r:Rectangle,vararg c:Circle): MutableList<Float>{
+    val h = min(r.x,r.y)/1000
+    val nx = r.x/h
+    val ny = r.y/h
+
+    val result = arrayListOf<Float>()
+    c.forEach {
+        result.add(0.0f)
+    }
+    for (i in 1..nx as Int ){
+        for (j in 1..ny as Int){
+            var count = 0
+            for(circle in c){
+                if(checkCircle(circle,r.x+i*h,r.y+j*h)){
+                    count += 1
+                }
+            }
+            result[count] +=  1f
+        }
+    }
+
+    result.forEach {
+        it/h/h
+    }
+
+    return result
+
+
+}
+
+fun checkCircle(c:Circle,x:Float,y:Float):Boolean{
+    return (x-c.x)*(x-c.x)+(y-c.y)*(y-c.y)<=c.r*c.r
 }

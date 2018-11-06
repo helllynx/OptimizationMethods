@@ -5,7 +5,7 @@ import kotlin.math.round
 
 fun intersectionArea(rect: Rectangle, circle: Circle): Float {
     var area = 0.0f
-    val resolution = 0.1f
+    val resolution = 1f
     var upperBound: Float
     var lowerBound: Float
     var leftBound = 0.0f

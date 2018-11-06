@@ -12,5 +12,6 @@
     <orderEntry type="library" exported="" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" exported="" name="com.esotericsoftware:kryo:5.0.0-RC1" level="application" />
     <orderEntry type="library" exported="" name="no.tornado:tornadofx:1.7.17" level="application" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

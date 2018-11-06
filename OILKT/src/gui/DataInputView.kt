@@ -27,6 +27,7 @@ class DataInputView : View() {
         override val root = hbox {
             hbox {
                 form {
+                    spacing = 10.0
                     fieldset("Circle data") {
                         field("x") {
                             x = textfield()
@@ -61,12 +62,15 @@ class DataInputView : View() {
                         action {
                             calculate(Data.inputData)
                             replaceWith<OutDataListView>()
+//                            openInternalWindow(OutDataListView::class,modal = false)
+
                         }
                     }
                     button("Start auto test") {
                         action {
                             massiveTest()
                             replaceWith<OutDataListView>()
+//                            openInternalWindow(OutDataListView::class,modal = false)
                         }
                     }
                 }

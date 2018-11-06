@@ -1,6 +1,7 @@
 package backend
 
 import java.lang.Float.max
+import kotlin.math.min
 
 class Data {
     companion object {
@@ -23,11 +24,19 @@ class OilMap(
     fun getIntersectRectanglesArea(circle: Circle, oilMap: OilMap): Float {
         val startX = (max(circle.x - circle.r, 0f) / oilMap.width).toInt()
         val startY = (max(circle.y - circle.r, 0f) / oilMap.height).toInt()
-        val endX = ((max(circle.x + circle.r, 0f) / oilMap.width).toInt() + 1)
-        val endY = ((max(circle.y + circle.r, 0f) / oilMap.height).toInt() + 1)
+        val endX = min(Data.importOilMap.size, ((max(circle.x + circle.r, 0f) / oilMap.width).toInt() + 1))
+        val endY = min(Data.importOilMap.size, ((max(circle.y + circle.r, 0f) / oilMap.height).toInt() + 1))
 
         var area = 0f
         var count = 0
+
+
+        //TODO fix out of bounds, add mapo sizes x and y
+        println("startX: $startX")
+        println("endX: $endX")
+        println("startY: $startY")
+        println("endY: $endY")
+
         try {
             for (i in startY until endY) {
                 for (j in startX until endX) {
