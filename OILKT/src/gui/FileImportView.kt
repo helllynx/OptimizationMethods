@@ -20,7 +20,7 @@ class FileImportView : View() {
     private lateinit var files: List<File>
 
     override val root = vbox {
-        setMinSize(460.0, 600.0)
+        spacing = 10.0
         button("Read txt") {
             action {
                 files = chooseFile("Open ", fileTypeFilterTXT)
@@ -33,7 +33,7 @@ class FileImportView : View() {
                     outputFS.close()
                     println("Read txt map: $file")
 //                    openInternalWindow(DataInputView::class,modal = false)
-                    replaceWith<DataInputView>()
+//                    replaceWith<DataInputView>()
                 } else {
                     alert(
                         type = Alert.AlertType.ERROR,
@@ -57,7 +57,7 @@ class FileImportView : View() {
                     inputFS.close()
                     println("Import serialized map: $file")
 //                    openInternalWindow(DataInputView::class,modal = false)
-                    replaceWith<DataInputView>()
+//                    replaceWith<DataInputView>()
                 } else {
                     alert(
                         type = Alert.AlertType.ERROR,
@@ -70,23 +70,5 @@ class FileImportView : View() {
                 }
             }
         }
-//        button("Enter circles") {
-//            action {
-//                if (Data.importOilMap.size != 0)
-//                {
-//                    openInternalWindow(DataInputView::class,modal = false)
-//                } else {
-//                    alert(
-//                        type = Alert.AlertType.ERROR,
-//                        header = "Please select file with data before push this fucking button!",
-//                        actionFn = { btnType ->
-//                            if (btnType.buttonData == ButtonBar.ButtonData.OK_DONE) {
-//                            }
-//                        }
-//                    )
-//                }
-//
-//            }
-//        }
     }
 }

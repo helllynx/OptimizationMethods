@@ -4,7 +4,7 @@ import backend.OilMap
 import com.esotericsoftware.kryo.Kryo
 import tornadofx.App
 
-class MyApp : App(FileImportView::class) {
+class MyApp : App(MainView::class) {
 
     companion object {
         val kryo = Kryo()

@@ -61,16 +61,11 @@ class DataInputView : View() {
                     button("Start calculation") {
                         action {
                             calculate(Data.inputData)
-                            replaceWith<OutDataListView>()
-//                            openInternalWindow(OutDataListView::class,modal = false)
-
                         }
                     }
                     button("Start auto test") {
                         action {
                             massiveTest()
-                            replaceWith<OutDataListView>()
-//                            openInternalWindow(OutDataListView::class,modal = false)
                         }
                     }
                 }

@@ -5,7 +5,7 @@ import kotlin.math.round
 
 fun intersectionArea(rect: Rectangle, circle: Circle): Float {
     var area = 0.0f
-    val resolution = 1f
+    val resolution = 0.1f
     var upperBound: Float
     var lowerBound: Float
     var leftBound = 0.0f
@@ -105,9 +105,9 @@ fun testIntersectionAreaCalculation(x: Float, y: Float, width: Float, height: Fl
 }
 
 fun massiveTest() {
-    val n = Data.importOilMap.size / 10
+    val n = Data.importOilMap.size * Data.importOilMap.width
     for (i in 1..n step 1) {
-        val r = round((Math.random() * i * 10).toFloat())
+        val r = round((Math.random() * i).toFloat())
         val x = r + round((Math.random() * i)).toFloat()
         val y = r + round(Math.random() * i).toFloat()
         val c = Circle(x, y, r)

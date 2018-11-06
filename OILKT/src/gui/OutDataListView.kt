@@ -1,12 +1,17 @@
 package gui
 
 import backend.AreaOutType
-import backend.Data
-import tornadofx.*
+import javafx.collections.FXCollections
+import tornadofx.SmartResize
+import tornadofx.View
+import tornadofx.readonlyColumn
+import tornadofx.tableview
 
 
 class OutDataListView : View() {
-    override val root = tableview(Data.outputData.observable()) {
+    val areas = FXCollections.observableArrayList<AreaOutType>()
+
+    override val root = tableview(areas) {
         readonlyColumn("X", AreaOutType::x)
         readonlyColumn("Y", AreaOutType::y)
         readonlyColumn("R", AreaOutType::r)

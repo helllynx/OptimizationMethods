@@ -32,10 +32,10 @@ class OilMap(
 
 
         //TODO fix out of bounds, add mapo sizes x and y
-        println("startX: $startX")
-        println("endX: $endX")
-        println("startY: $startY")
-        println("endY: $endY")
+//        println("startX: $startX")
+//        println("endX: $endX")
+//        println("startY: $startY")
+//        println("endY: $endY")
 
         try {
             for (i in startY until endY) {
