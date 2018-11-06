@@ -66,20 +66,20 @@ fun lowerCircleFunction(c: Circle, x: Float): Float {
     return (c.y + Math.sqrt((c.r * c.r) - Math.pow(((x - c.x).toDouble()), 2.0))).toFloat()
 }
 
-fun checkAll(r:Rectangle,vararg c:Circle): MutableList<Float>{
-    val h = min(r.x,r.y)/1000
-    val nx = r.x/h
-    val ny = r.y/h
+fun checkAll(rect:Rectangle, circles: ArrayList<Circle>): MutableList<Float>{
+    val h = min(rect.x,rect.y)/1000
+    val nx = rect.x/h
+    val ny = rect.y/h
 
     val result = arrayListOf<Float>()
-    c.forEach {
+    circles.forEach {
         result.add(0.0f)
     }
     for (i in 1..nx as Int ){
         for (j in 1..ny as Int){
             var count = 0
-            for(circle in c){
-                if(checkCircle(circle,r.x+i*h,r.y+j*h)){
+            for(circle in circles){
+                if(checkCircle(circle,rect.x+i*h,rect.y+j*h)){
                     count += 1
                 }
             }
