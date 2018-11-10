@@ -5,7 +5,7 @@ import kotlin.math.min
 
 class Data {
     companion object {
-        lateinit var importOilMap: OilMap
+        var importOilMap: OilMap = OilMap()
         var inputData: ArrayList<Circle> = ArrayList()
         var outputData: ArrayList<AreaOutType> = ArrayList()
     }
@@ -29,7 +29,6 @@ class OilMap(
 
         var area = 0f
         var count = 0
-
 
         //TODO fix out of bounds, add mapo sizes x and y
 //        println("startX: $startX")

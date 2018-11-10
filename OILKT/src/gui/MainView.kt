@@ -15,6 +15,7 @@ class MainView : View() {
         left(LeftSide::class)
     }
 
+
     class LeftSide : View() {
         private var x: TextField by singleAssign()
         private var y: TextField by singleAssign()
@@ -31,13 +32,13 @@ class MainView : View() {
                     form {
                         spacing = 10.0
                         fieldset("Circle data") {
-                            field("x") {
+                            field("X") {
                                 x = textfield()
                             }
-                            field("y") {
+                            field("Y") {
                                 y = textfield()
                             }
-                            field("r") {
+                            field("R") {
                                 r = textfield()
                             }
                         }
@@ -68,20 +69,38 @@ class MainView : View() {
                         }
                         button("Start calculation") {
                             action {
-                                Data.outputData.clear()
-                                calculate(Data.inputData)
-                                Data.outputData.forEach { outView.areas.add(it) }
-
-//                            replaceWith<OutDataListView>()
-//                            openInternalWindow(OutDataListView::class,modal = false)
-
+                                if (Data.importOilMap.size == 0) {
+                                    alert(
+                                        type = Alert.AlertType.ERROR,
+                                        header = "Please select file with data!",
+                                        actionFn = { btnType ->
+                                            if (btnType.buttonData == ButtonBar.ButtonData.OK_DONE) {
+                                            }
+                                        }
+                                    )
+                                } else {
+                                    Data.outputData.clear()
+                                    calculate(Data.inputData)
+                                    Data.outputData.forEach { outView.areas.add(it) }
+                                }
                             }
                         }
                         button("Start auto test") {
                             action {
-                                Data.outputData.clear()
-                                massiveTest()
-                                Data.outputData.forEach { outView.areas.add(it) }
+                                if (Data.importOilMap.size == 0) {
+                                    alert(
+                                        type = Alert.AlertType.ERROR,
+                                        header = "Please select file with data!",
+                                        actionFn = { btnType ->
+                                            if (btnType.buttonData == ButtonBar.ButtonData.OK_DONE) {
+                                            }
+                                        }
+                                    )
+                                } else {
+                                    Data.outputData.clear()
+                                    massiveTest()
+                                    Data.outputData.forEach { outView.areas.add(it) }
+                                }
                             }
                         }
                         button("Clear") {
@@ -104,9 +123,9 @@ class MainView : View() {
 
         override val root = tableview<Circle> {
             items = circles
-            column("x", Circle::x)
-            column("y", Circle::y)
-            column("r", Circle::r)
+            column("X", Circle::x)
+            column("Y", Circle::y)
+            column("R", Circle::r)
         }
     }
 }

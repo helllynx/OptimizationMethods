@@ -16,7 +16,7 @@ class OutDataListView : View() {
         readonlyColumn("Y", AreaOutType::y)
         readonlyColumn("R", AreaOutType::r)
         readonlyColumn("S", AreaOutType::s)
-        readonlyColumn("Calc S", AreaOutType::calcS)
+//        readonlyColumn("Calc S", AreaOutType::calcS)
 
         prefWidth = 460.0
         prefHeight = 600.0

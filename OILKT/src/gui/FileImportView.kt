@@ -20,6 +20,7 @@ class FileImportView : View() {
     private lateinit var files: List<File>
 
     override val root = vbox {
+        paddingAll = 10.0
         spacing = 10.0
         button("Read txt") {
             action {
