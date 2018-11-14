@@ -91,21 +91,8 @@ fun intersectionArea(rect: Rectangle, circle: Circle): Float {
     return area
 }
 
-fun testIntersectionAreaCalculation(x: Float, y: Float, width: Float, height: Float, circle: Circle) {
-    println("backend.Rectangle        : x=$x y=$y width=$width height=$height")
-    println("Circle           : x=$circle.x y=${circle.y} r=${circle.r}")
-    println("backend.Rectangle Area   : ${width * height}")
-    println("Circle Area      : ${Math.pow(circle.r.toDouble(), 2.0) * Math.PI}")
-    println(
-        "Intersection Area: ${intersectionArea(
-            Rectangle(x, y, width, height),
-            circle
-        )}"
-    )
-}
-
 fun massiveTest() {
-    val n = Data.importOilMap.size * Data.importOilMap.width
+    val n = Data.importMap.size * Data.importMap.width
     for (i in 1..n step 1) {
         val r = round((Math.random() * i).toFloat())
         val x = r + round((Math.random() * i)).toFloat()
@@ -116,11 +103,9 @@ fun massiveTest() {
         Data.outputData.add(
             AreaOutType(
                 c,
-                Data.importOilMap.getIntersectRectanglesArea(c, Data.importOilMap),
+                Data.importMap.getIntersectRectanglesArea(c, Data.importMap),
                 (Math.pow(r.toDouble(), 2.0) * Math.PI).toFloat()
             )
         )
     }
 }
-
-

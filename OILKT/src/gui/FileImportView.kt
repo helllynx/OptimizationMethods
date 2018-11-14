@@ -28,9 +28,9 @@ class FileImportView : View() {
                 file = if (files.isEmpty()) "" else files[0].absolutePath
                 if (!file.isEmpty()) {
                     println("started")
-                    measureNanoTime { Data.importOilMap = backend.parse(file) }.apply(::println)
+                    measureNanoTime { Data.importMap = backend.parse(file) }.apply(::println)
                     val outputFS = Output(FileOutputStream(file.substring(file.lastIndexOf("/") + 1) + ".bin"))
-                    kryo.writeObject(outputFS, Data.importOilMap)
+                    kryo.writeObject(outputFS, Data.importMap)
                     outputFS.close()
                     println("Read txt map: $file")
 //                    openInternalWindow(DataInputView::class,modal = false)
@@ -54,7 +54,7 @@ class FileImportView : View() {
                 file = if (files.isEmpty()) "" else files[0].absolutePath
                 if (!file.isEmpty()) {
                     val inputFS = Input(FileInputStream(file))
-                    Data.importOilMap = kryo.readObject(inputFS, backend.OilMap::class.java)
+                    Data.importMap = kryo.readObject(inputFS, backend.MyMap::class.java)
                     inputFS.close()
                     println("Import serialized map: $file")
 //                    openInternalWindow(DataInputView::class,modal = false)

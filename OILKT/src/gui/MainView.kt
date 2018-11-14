@@ -69,7 +69,7 @@ class MainView : View() {
                         }
                         button("Start calculation") {
                             action {
-                                if (Data.importOilMap.size == 0) {
+                                if (Data.importMap.size == 0) {
                                     alert(
                                         type = Alert.AlertType.ERROR,
                                         header = "Please select file with data!",
@@ -87,7 +87,7 @@ class MainView : View() {
                         }
                         button("Start auto test") {
                             action {
-                                if (Data.importOilMap.size == 0) {
+                                if (Data.importMap.size == 0) {
                                     alert(
                                         type = Alert.AlertType.ERROR,
                                         header = "Please select file with data!",

@@ -13,14 +13,14 @@ fun readFile(fileName: String): ArrayList<String> {
     return data
 }
 
-fun parse(pathToFile: String): OilMap {
+fun parse(pathToFile: String): MyMap {
     val data: ArrayList<String> = readFile(pathToFile)
-    val oilMapType: OilMap.MapType
+    val oilMapType: MyMap.MapType
 
     oilMapType = if (data[0] == "OIL") {
-        OilMap.MapType.OIL
+        MyMap.MapType.OIL
     } else {
-        OilMap.MapType.PORO
+        MyMap.MapType.PORO
     }
 
     val sizeX = data[1].split(" ")[0].toInt()
@@ -43,5 +43,5 @@ fun parse(pathToFile: String): OilMap {
         index += sizeX
     }*/
 
-    return OilMap(arrayData, oilMapType, height, width, sizeX)
+    return MyMap(arrayData, oilMapType, height, width, sizeX)
 }

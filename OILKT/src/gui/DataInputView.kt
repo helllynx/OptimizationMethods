@@ -22,7 +22,7 @@ class DataInputView : View() {
         private var y: TextField by singleAssign()
         private var r: TextField by singleAssign()
 
-        val requestView: RequestView by inject()
+        private val requestView: RequestView by inject()
 
         override val root = hbox {
             hbox {

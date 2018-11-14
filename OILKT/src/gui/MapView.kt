@@ -1,3 +1,3 @@
 package gui
 
-//TODO make OilMap model with circles
+//TODO make MyMap model with circles

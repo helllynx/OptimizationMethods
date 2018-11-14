@@ -5,14 +5,31 @@ import kotlin.math.min
 
 class Data {
     companion object {
-        var importOilMap: OilMap = OilMap()
+        var importMap: MyMap = MyMap()
         var inputData: ArrayList<Circle> = ArrayList()
         var outputData: ArrayList<AreaOutType> = ArrayList()
     }
 }
 
-class OilMap(
-    var array: List<List<Float>> = listOf(),
+class IndexFloat {
+    var value: Float
+    var used: Boolean
+    var subList: List<IndexFloat> = listOf()
+
+    constructor(value: Float, used: Boolean) {
+        this.value = value
+        this.used = used
+    }
+
+    constructor(value: Float, used: Boolean, subList: List<IndexFloat>) {
+        this.value = value
+        this.used = used
+        this.subList = subList
+    }
+}
+
+class MyMap(
+    var map: List<List<IndexFloat>> = listOf(),
     var mapType: MapType = MapType.OIL,
     var height: Int = 0,
     var width: Int = 0,
@@ -21,20 +38,15 @@ class OilMap(
 
     enum class MapType { OIL, PORO }
 
-    fun getIntersectRectanglesArea(circle: Circle, oilMap: OilMap): Float {
+    fun getIntersectRectanglesArea(circle: Circle, oilMap: MyMap): Float {
         val startX = (max(circle.x - circle.r, 0f) / oilMap.width).toInt()
         val startY = (max(circle.y - circle.r, 0f) / oilMap.height).toInt()
-        val endX = min(Data.importOilMap.size, ((max(circle.x + circle.r, 0f) / oilMap.width).toInt() + 1))
-        val endY = min(Data.importOilMap.size, ((max(circle.y + circle.r, 0f) / oilMap.height).toInt() + 1))
+        val endX = min(Data.importMap.size, ((max(circle.x + circle.r, 0f) / oilMap.width).toInt() + 1))
+        //TODO add map dimention sizes
+        val endY = min(Data.importMap.size, ((max(circle.y + circle.r, 0f) / oilMap.height).toInt() + 1))
 
         var area = 0f
         var count = 0
-
-        //TODO fix out of bounds, add mapo sizes x and y
-//        println("startX: $startX")
-//        println("endX: $endX")
-//        println("startY: $startY")
-//        println("endY: $endY")
 
         try {
             for (i in startY until endY) {
@@ -46,7 +58,7 @@ class OilMap(
                             oilMap.width.toFloat(),
                             oilMap.height.toFloat()
                         ), circle
-                    ) * oilMap.array[i][j]
+                    ) * oilMap.map[i][j].value
                     count += 1
                 }
             }
@@ -62,7 +74,7 @@ fun calculate(circles: ArrayList<Circle>) {
         Data.outputData.add(
             AreaOutType(
                 c,
-                Data.importOilMap.getIntersectRectanglesArea(c, Data.importOilMap),
+                Data.importMap.getIntersectRectanglesArea(c, Data.importMap),
                 (Math.pow(c.r.toDouble(), 2.0) * Math.PI).toFloat()
             )
         )
