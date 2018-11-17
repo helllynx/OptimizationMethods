@@ -1,13 +1,29 @@
 package backend
 
+import java.util.*
 import kotlin.math.abs
 import kotlin.math.round
 import kotlin.math.sqrt
 
 fun intersectionArea(rect: Rectangle, circle: Circle, i: Int, j: Int): Float {
-    if (checkRectangle(rect).size == 1) {
+    val circlesToCheck = checkRectangle(rect)
 
+    return if (circlesToCheck.size == 1) {
+        calculateAreaWithOneCircle(rect, circle)
+    } else {
+        calculateThisShitSomehow(circlesToCheck, i, j)
     }
+}
+
+fun calculateThisShitSomehow(circles: ArrayList<Circle>, i: Int, j: Int): Float {
+    val cell: ArrayList<Float> = arrayListOf(
+        Arrays.fill(it)
+    )
+
+
+}
+
+fun calculateAreaWithOneCircle(rect: Rectangle, circle: Circle): Float {
     var area = 0.0f
     val resolution = 0.01f
     var upperBound: Float
@@ -111,14 +127,15 @@ fun checkCircle(circle: Circle, rect: Rectangle): Boolean {
     if (getDistance(rect.left(), rect.top(), circle.x, circle.y) < circle.r ||
         getDistance(rect.right(), rect.bottom(), circle.x, circle.y) < circle.r ||
         getDistance(rect.right(), rect.top(), circle.x, circle.y) < circle.r ||
-        getDistance(rect.left(), rect.bottom(), circle.x, circle.y) < circle.r ) {
+        getDistance(rect.left(), rect.bottom(), circle.x, circle.y) < circle.r
+    ) {
         return true
     }
     return false
 }
 
 fun getDistance(xr: Float, yr: Float, xc: Float, yc: Float): Float {
-    return sqrt(Math.pow((xr-xc).toDouble(), 2.0) + Math.pow((yr-yc).toDouble(), 2.0)).toFloat()
+    return sqrt(Math.pow((xr - xc).toDouble(), 2.0) + Math.pow((yr - yc).toDouble(), 2.0)).toFloat()
 }
 
 fun massiveTest() {
@@ -139,3 +156,5 @@ fun massiveTest() {
         )
     }
 }
+
+fun ArrayList.fill():
