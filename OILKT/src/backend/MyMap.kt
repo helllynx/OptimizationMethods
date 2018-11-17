@@ -51,6 +51,8 @@ class MyMap(
         try {
             for (i in startY until endY) {
                 for (j in startX until endX) {
+                    if (oilMap.map[i][j].used)
+                        continue
                     area += intersectionArea(
                         Rectangle(
                             (j * oilMap.width).toFloat(),
