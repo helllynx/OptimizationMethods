@@ -1,9 +1,8 @@
 package gui
 
-import backend.Circle
 import backend.Data
-import backend.calculate
-import backend.massiveTest
+import backend.MyCircleData
+import backend.newCalculation
 import javafx.collections.FXCollections
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonBar
@@ -31,7 +30,7 @@ class MainView : View() {
                     add(fileInputView)
                     form {
                         spacing = 10.0
-                        fieldset("Circle data") {
+                        fieldset("MyCircleData data") {
                             field("X") {
                                 x = textfield()
                             }
@@ -57,13 +56,19 @@ class MainView : View() {
                                     )
                                 } else {
                                     requestView.circles.add(
-                                        Circle(
+                                        MyCircleData(
                                             x.text.toFloat(),
                                             y.text.toFloat(),
                                             r.text.toFloat()
                                         )
                                     )
-                                    Data.inputData.add(Circle(x.text.toFloat(), y.text.toFloat(), r.text.toFloat()))
+                                    Data.inputData.add(
+                                        MyCircleData(
+                                            x.text.toFloat(),
+                                            y.text.toFloat(),
+                                            r.text.toFloat()
+                                        )
+                                    )
                                 }
                             }
                         }
@@ -79,9 +84,15 @@ class MainView : View() {
                                         }
                                     )
                                 } else {
-                                    Data.outputData.clear()
-                                    calculate(Data.inputData)
-                                    Data.outputData.forEach { outView.areas.add(it) }
+//                                    calculate(Data.inputData)
+                                    newCalculation()
+
+                                    for (i in 0 until Data.inputData.size) {
+                                        Data.inputData[i].theoreticallyArea =
+                                                (Math.pow(Data.inputData[i].r.toDouble(), 2.0) * Math.PI).toFloat()
+                                    }
+
+                                    Data.inputData.forEach { outView.areas.add(it) }
                                 }
                             }
                         }
@@ -97,9 +108,8 @@ class MainView : View() {
                                         }
                                     )
                                 } else {
-                                    Data.outputData.clear()
-                                    massiveTest()
-                                    Data.outputData.forEach { outView.areas.add(it) }
+//                                    massiveTest()
+//                                    Data.outputData.forEach { outView.areas.add(it) }
                                 }
                             }
                         }
@@ -119,13 +129,13 @@ class MainView : View() {
     }
 
     class RequestView : View() {
-        val circles = FXCollections.observableArrayList<Circle>()
+        val circles = FXCollections.observableArrayList<MyCircleData>()
 
-        override val root = tableview<Circle> {
+        override val root = tableview<MyCircleData> {
             items = circles
-            column("X", Circle::x)
-            column("Y", Circle::y)
-            column("R", Circle::r)
+            column("X", MyCircleData::x)
+            column("Y", MyCircleData::y)
+            column("R", MyCircleData::r)
         }
     }
 }

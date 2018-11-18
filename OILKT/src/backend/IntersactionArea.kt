@@ -1,29 +1,63 @@
 package backend
 
-import java.util.*
 import kotlin.math.abs
-import kotlin.math.round
 import kotlin.math.sqrt
 
-fun intersectionArea(rect: Rectangle, circle: Circle, i: Int, j: Int): Float {
+fun intersectionArea(rect: Rectangle, myMyCircleData: MyCircleData, i: Int, j: Int) {
+    if (Data.importMap.map[i][j].used)
+        return
+
     val circlesToCheck = checkRectangle(rect)
 
-    return if (circlesToCheck.size == 1) {
-        calculateAreaWithOneCircle(rect, circle)
+    if (circlesToCheck.trueCount() == 1) {
+        throw Exception("FUCK!")
+//        calculateAreaWithOneCircle(rect, myMyCircleData, i, j)
     } else {
         calculateThisShitSomehow(circlesToCheck, i, j)
     }
 }
 
-fun calculateThisShitSomehow(circles: ArrayList<Circle>, i: Int, j: Int): Float {
-    val cell: ArrayList<Float> = arrayListOf(
-        Arrays.fill(it)
-    )
+fun calculateThisShitSomehow(circles: BooleanArray, i: Int, j: Int) {
+    val mY = i * Data.importMap.height
+    val mX = j * Data.importMap.width
+    val circleIndexes = BooleanArray(circles.size)
+    val currentSpoil = Data.importMap.map[i][j].value
 
+    if (Data.importMap.map[i][j].subMap.isEmpty()) {
+        Data.importMap.map[i][j].subMap =
+                indexFloatFill(Data.importMap.map[i][j].value, Data.importMap.height, Data.importMap.width)
+    }
 
+    for (i_ in 0 until Data.importMap.height) {
+        for (j_ in 0 until Data.importMap.width) {
+            if (Data.importMap.map[i][j].subMap[i_][j_].used)
+                continue
+            for (c in 0 until circles.size) {
+                if (getDistance(
+                        (mX + j_).toFloat(),
+                        (mY + i_).toFloat(),
+                        Data.inputData[c].x,
+                        Data.inputData[c].y
+                    ) < Data.inputData[c].r
+                ) {
+                    circleIndexes[c] = true
+                }
+            }
+
+            val spoil = currentSpoil / circleIndexes.trueCount()
+
+            for (idx in 0 until circleIndexes.size) {
+                if (circleIndexes[idx]) {
+                    Data.inputData[idx].calculatedArea += spoil
+                }
+            }
+            Data.importMap.map[i][j].subMap[i][j].used = true
+            circleIndexes.fillFalse()
+        }
+    }
 }
 
-fun calculateAreaWithOneCircle(rect: Rectangle, circle: Circle): Float {
+fun calculateAreaWithOneCircle(rect: Rectangle, myCircleData: MyCircleData, i: Int, j: Int): Float {
     var area = 0.0f
     val resolution = 0.01f
     var upperBound: Float
@@ -32,64 +66,67 @@ fun calculateAreaWithOneCircle(rect: Rectangle, circle: Circle): Float {
     var rightBound = 0.0f
 
     //TODO mey be refactor this bullshit
-//    if (rect.bottom() < circle.y && rect.right() < circle.x && backend.getDistance(
+//    if (rect.bottom() < myCircleData.y && rect.right() < myCircleData.x && backend.getDistance(
 //            backend.Point(
 //                rect.bottom(),
 //                rect.right()
-//            ), circle
-//        ) > circle.r ||
-//        rect.top() > circle.y && rect.right() < circle.x && backend.getDistance(
+//            ), myCircleData
+//        ) > myCircleData.r ||
+//        rect.top() > myCircleData.y && rect.right() < myCircleData.x && backend.getDistance(
 //            backend.Point(rect.top(), rect.right()),
-//            circle
-//        ) > circle.r ||
-//        rect.bottom() < circle.y && rect.left() > circle.x && backend.getDistance(
+//            myCircleData
+//        ) > myCircleData.r ||
+//        rect.bottom() < myCircleData.y && rect.left() > myCircleData.x && backend.getDistance(
 //            backend.Point(
 //                rect.bottom(),
 //                rect.left()
-//            ), circle
-//        ) > circle.r ||
-//        rect.top() > circle.y && rect.left() > circle.x && backend.getDistance(
+//            ), myCircleData
+//        ) > myCircleData.r ||
+//        rect.top() > myCircleData.y && rect.left() > myCircleData.x && backend.getDistance(
 //            backend.Point(rect.top(), rect.left()),
-//            circle
-//        ) > circle.r
+//            myCircleData
+//        ) > myCircleData.r
 //    ) {
 //        return 0.0f
 //    }
 
+    Data.importMap.map[i][j].used = true
+
     //A variable storing the nearest horizontal edge of the rectangle.
-    //Determine what is nearer to the circle center - the rectangle top edge or the rectangle bottom edge
-    val nearestRectangleEdge: Float = if (Math.abs(circle.y - rect.top()) > Math.abs(circle.y - rect.bottom())) {
+    //Determine what is nearer to the myCircleData center - the rectangle top edge or the rectangle bottom edge
+    val nearestRectangleEdge: Float =
+        if (Math.abs(myCircleData.y - rect.top()) > Math.abs(myCircleData.y - rect.bottom())) {
         rect.bottom()
     } else {
         rect.top()
     }
 
     // TODO need refactor this code, because leftBound sometimes takes value gather than right that is not correct
-    if (circle.y >= rect.top() && circle.y <= rect.bottom()) {
-//        Take care if the circle's center lies within the rectangle.
-        leftBound = Math.max(-circle.r + circle.x, rect.left())
-        rightBound = Math.min(circle.r + circle.x, rect.right())
-    } else if (circle.r >= (Math.abs(nearestRectangleEdge - circle.y))) {
-        //If the circle's center lies outside of the rectangle, we can choose optimal bounds.
+    if (myCircleData.y >= rect.top() && myCircleData.y <= rect.bottom()) {
+//        Take care if the myCircleData's center lies within the rectangle.
+        leftBound = Math.max(-myCircleData.r + myCircleData.x, rect.left())
+        rightBound = Math.min(myCircleData.r + myCircleData.x, rect.right())
+    } else if (myCircleData.r >= (Math.abs(nearestRectangleEdge - myCircleData.y))) {
+        //If the myCircleData's center lies outside of the rectangle, we can choose optimal bounds.
         leftBound = Math.max(
             (-Math.sqrt(
-                circle.r * circle.r - Math.abs(
+                myCircleData.r * myCircleData.r - Math.abs(
                     Math.pow(
-                        (nearestRectangleEdge - circle.y).toDouble(),
+                        (nearestRectangleEdge - myCircleData.y).toDouble(),
                         2.0
                     )
                 )
-            )).toFloat() + circle.x, rect.left()
+            )).toFloat() + myCircleData.x, rect.left()
         )
         rightBound = Math.min(
             (Math.sqrt(
-                circle.r * circle.r - Math.abs(
+                myCircleData.r * myCircleData.r - Math.abs(
                     Math.pow(
-                        (nearestRectangleEdge - circle.y).toDouble(),
+                        (nearestRectangleEdge - myCircleData.y).toDouble(),
                         2.0
                     )
                 )
-            )).toFloat() + circle.x, rect.right()
+            )).toFloat() + myCircleData.x, rect.right()
         )
     }
 
@@ -98,11 +135,11 @@ fun calculateAreaWithOneCircle(rect: Rectangle, circle: Circle): Float {
     while (i <= rightBound) {
         upperBound = Math.max(
             upperRectangleFunction(rect, i - resolution / 2),
-            upperCircleFunction(circle, i - resolution / 2)
+            upperCircleFunction(myCircleData, i - resolution / 2)
         )
         lowerBound = Math.min(
             lowerRectangleFunction(rect, i - resolution / 2),
-            lowerCircleFunction(circle, i - resolution / 2)
+            lowerCircleFunction(myCircleData, i - resolution / 2)
         )
         area += abs(lowerBound - upperBound) * resolution
         i += resolution
@@ -111,23 +148,21 @@ fun calculateAreaWithOneCircle(rect: Rectangle, circle: Circle): Float {
     return area
 }
 
-fun checkRectangle(rect: Rectangle): ArrayList<Circle> {
-    val circles: ArrayList<Circle> = arrayListOf()
-
-    for (c in Data.inputData) {
-        if (checkCircle(c, rect)) {
-            circles.add(c)
+fun checkRectangle(rect: Rectangle): BooleanArray {
+    val circles: BooleanArray = BooleanArray(Data.inputData.size)
+    for (i in 0 until Data.inputData.size) {
+        if (checkCircle(Data.inputData[i], rect)) {
+            circles[i] = true
         }
     }
-
     return circles
 }
 
-fun checkCircle(circle: Circle, rect: Rectangle): Boolean {
-    if (getDistance(rect.left(), rect.top(), circle.x, circle.y) < circle.r ||
-        getDistance(rect.right(), rect.bottom(), circle.x, circle.y) < circle.r ||
-        getDistance(rect.right(), rect.top(), circle.x, circle.y) < circle.r ||
-        getDistance(rect.left(), rect.bottom(), circle.x, circle.y) < circle.r
+fun checkCircle(myMyCircleData: MyCircleData, rect: Rectangle): Boolean {
+    if (getDistance(rect.left(), rect.top(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r ||
+        getDistance(rect.right(), rect.bottom(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r ||
+        getDistance(rect.right(), rect.top(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r ||
+        getDistance(rect.left(), rect.bottom(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r
     ) {
         return true
     }
@@ -137,24 +172,50 @@ fun checkCircle(circle: Circle, rect: Rectangle): Boolean {
 fun getDistance(xr: Float, yr: Float, xc: Float, yc: Float): Float {
     return sqrt(Math.pow((xr - xc).toDouble(), 2.0) + Math.pow((yr - yc).toDouble(), 2.0)).toFloat()
 }
+//
+//fun massiveTest() {
+//    val n = Data.importMap.size * Data.importMap.width
+//    for (i in 1..n step 1) {
+//        val r = round((Math.random() * i).toFloat())
+//        val x = r + round((Math.random() * i)).toFloat()
+//        val y = r + round(Math.random() * i).toFloat()
+//        val c = MyCircleData(x, y, r)
+//
+//        Data.inputData.add(MyCircleData(c))
+//        Data.outputData.add(
+//            AreaOutType(
+//                c,
+//                Data.importMap.getIntersectRectanglesArea(c, Data.importMap),
+//                (Math.pow(r.toDouble(), 2.0) * Math.PI).toFloat()
+//            )
+//        )
+//    }
+//}
 
-fun massiveTest() {
-    val n = Data.importMap.size * Data.importMap.width
-    for (i in 1..n step 1) {
-        val r = round((Math.random() * i).toFloat())
-        val x = r + round((Math.random() * i)).toFloat()
-        val y = r + round(Math.random() * i).toFloat()
-        val c = Circle(x, y, r)
+fun indexFloatFill(filler: Float, height: Int, width: Int): MutableList<MutableList<IndexFloat>> {
+    val result: MutableList<MutableList<IndexFloat>> = mutableListOf()
+    val list: MutableList<IndexFloat> = mutableListOf()
 
-        Data.inputData.add(c)
-        Data.outputData.add(
-            AreaOutType(
-                c,
-                Data.importMap.getIntersectRectanglesArea(c, Data.importMap),
-                (Math.pow(r.toDouble(), 2.0) * Math.PI).toFloat()
-            )
-        )
-    }
+    for (i in 0 until width)
+        list.add(IndexFloat(filler))
+
+    for (i in 0 until height)
+        result.add(list)
+
+    return result
 }
 
-fun ArrayList.fill():
+
+fun BooleanArray.trueCount(): Int {
+    var count = 0
+    for (item in this) {
+        count += 1
+    }
+    return count
+}
+
+fun BooleanArray.fillFalse() {
+    for (i in 0 until this.size) {
+        this[i] = false
+    }
+}
