@@ -23,6 +23,9 @@ fun calculateThisShitSomehow(circles: BooleanArray, i: Int, j: Int) {
     val circleIndexes = BooleanArray(circles.size)
     val currentSpoil = Data.importMap.map[i][j].value
 
+    var temp2 = 0
+    var temp3 = 0
+
     if (Data.importMap.map[i][j].subMap.isEmpty()) {
         Data.importMap.map[i][j].subMap =
                 indexFloatFill(Data.importMap.map[i][j].value, Data.importMap.height, Data.importMap.width)
@@ -30,17 +33,23 @@ fun calculateThisShitSomehow(circles: BooleanArray, i: Int, j: Int) {
 
     for (i_ in 0 until Data.importMap.height) {
         for (j_ in 0 until Data.importMap.width) {
-            if (Data.importMap.map[i][j].subMap[i_][j_].used)
+            if (Data.importMap.map[i][j].subMap[i_][j_].used) {
+                temp2+=1
                 continue
+            }
             for (c in 0 until circles.size) {
-                if (getDistance(
+                if (getDistance2(
                         (mX + j_).toFloat(),
                         (mY + i_).toFloat(),
                         Data.inputData[c].x,
                         Data.inputData[c].y
                     ) < Data.inputData[c].r
                 ) {
+                    temp3 +=1
                     circleIndexes[c] = true
+                    Data.importMap.map[i][j].subMap[i_][j_].used = true
+                } else {
+                    circleIndexes[c] = false
                 }
             }
 
@@ -51,10 +60,12 @@ fun calculateThisShitSomehow(circles: BooleanArray, i: Int, j: Int) {
                     Data.inputData[idx].calculatedArea += spoil
                 }
             }
-            Data.importMap.map[i][j].subMap[i][j].used = true
-            circleIndexes.fillFalse()
+//            circleIndexes.fillFalse()
         }
     }
+    println("i: $i j: $j")
+    println(temp2)
+    println(temp3)
 }
 
 fun calculateAreaWithOneCircle(rect: Rectangle, myCircleData: MyCircleData, i: Int, j: Int): Float {
@@ -66,23 +77,23 @@ fun calculateAreaWithOneCircle(rect: Rectangle, myCircleData: MyCircleData, i: I
     var rightBound = 0.0f
 
     //TODO mey be refactor this bullshit
-//    if (rect.bottom() < myCircleData.y && rect.right() < myCircleData.x && backend.getDistance(
+//    if (rect.bottom() < myCircleData.y && rect.right() < myCircleData.x && backend.getDistance2(
 //            backend.Point(
 //                rect.bottom(),
 //                rect.right()
 //            ), myCircleData
 //        ) > myCircleData.r ||
-//        rect.top() > myCircleData.y && rect.right() < myCircleData.x && backend.getDistance(
+//        rect.top() > myCircleData.y && rect.right() < myCircleData.x && backend.getDistance2(
 //            backend.Point(rect.top(), rect.right()),
 //            myCircleData
 //        ) > myCircleData.r ||
-//        rect.bottom() < myCircleData.y && rect.left() > myCircleData.x && backend.getDistance(
+//        rect.bottom() < myCircleData.y && rect.left() > myCircleData.x && backend.getDistance2(
 //            backend.Point(
 //                rect.bottom(),
 //                rect.left()
 //            ), myCircleData
 //        ) > myCircleData.r ||
-//        rect.top() > myCircleData.y && rect.left() > myCircleData.x && backend.getDistance(
+//        rect.top() > myCircleData.y && rect.left() > myCircleData.x && backend.getDistance2(
 //            backend.Point(rect.top(), rect.left()),
 //            myCircleData
 //        ) > myCircleData.r
@@ -159,17 +170,17 @@ fun checkRectangle(rect: Rectangle): BooleanArray {
 }
 
 fun checkCircle(myMyCircleData: MyCircleData, rect: Rectangle): Boolean {
-    if (getDistance(rect.left(), rect.top(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r ||
-        getDistance(rect.right(), rect.bottom(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r ||
-        getDistance(rect.right(), rect.top(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r ||
-        getDistance(rect.left(), rect.bottom(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r
+    if (getDistance2(rect.left(), rect.top(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r ||
+        getDistance2(rect.right(), rect.bottom(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r ||
+        getDistance2(rect.right(), rect.top(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r ||
+        getDistance2(rect.left(), rect.bottom(), myMyCircleData.x, myMyCircleData.y) < myMyCircleData.r
     ) {
         return true
     }
     return false
 }
 
-fun getDistance(xr: Float, yr: Float, xc: Float, yc: Float): Float {
+fun getDistance2(xr: Float, yr: Float, xc: Float, yc: Float): Float {
     return sqrt(Math.pow((xr - xc).toDouble(), 2.0) + Math.pow((yr - yc).toDouble(), 2.0)).toFloat()
 }
 //
@@ -194,13 +205,16 @@ fun getDistance(xr: Float, yr: Float, xc: Float, yc: Float): Float {
 
 fun indexFloatFill(filler: Float, height: Int, width: Int): MutableList<MutableList<IndexFloat>> {
     val result: MutableList<MutableList<IndexFloat>> = mutableListOf()
-    val list: MutableList<IndexFloat> = mutableListOf()
+//    val list: MutableList<IndexFloat> = mutableListOf()
 
-    for (i in 0 until width)
-        list.add(IndexFloat(filler))
 
-    for (i in 0 until height)
+
+    for (i in 0 until height) {
+        val list: MutableList<IndexFloat> = mutableListOf()
+        for (j in 0 until width)
+            list.add(IndexFloat(filler))
         result.add(list)
+    }
 
     return result
 }

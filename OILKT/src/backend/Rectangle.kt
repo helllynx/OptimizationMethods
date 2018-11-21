@@ -21,15 +21,15 @@ class Rectangle(var x: Float, var y: Float, var width: Float, var height: Float)
 }
 
 data class Point(var x: Float, var y: Float)
-class AreaOutType(var c: MyCircleData, var s: Float, var calcS: Float) {
-    val x = c.x
-    val y = c.y
-    val r = c.r
-}
-
-//fun getDistance(p1: Point, c: MyCircleData): Float {
-//    return Math.sqrt(Math.pow((p1.x - c.x).toDouble(), 2.0) + Math.pow((p1.y - c.y).toDouble(), 2.0)).toFloat()
+//class AreaOutType(var c: MyCircleData, var s: Float, var calcS: Float) {
+//    val x = c.x
+//    val y = c.y
+//    val r = c.r
 //}
+
+fun getDistance(p1: Point, c: MyCircleData): Float {
+    return Math.sqrt(Math.pow((p1.x - c.x).toDouble(), 2.0) + Math.pow((p1.y - c.y).toDouble(), 2.0)).toFloat()
+}
 
 fun upperRectangleFunction(rect: Rectangle, x: Float): Float {
     if (rect.left() > x || rect.right() < x) {
