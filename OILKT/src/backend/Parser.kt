@@ -36,12 +36,5 @@ fun parse(pathToFile: String): MyMap {
         .windowed(sizeX, sizeX)
         .toCollection(ArrayList(sizeX * sizeY))
 
-    /*var index = 0
-
-    repeat(sizeY) {
-        arrayData.add(data[3].split(" ").subMap(index, index + sizeX).map { it.trim().toFloat() }.toFloatArray())
-        index += sizeX
-    }*/
-
     return MyMap(arrayData, oilMapType, height, width, sizeX)
 }

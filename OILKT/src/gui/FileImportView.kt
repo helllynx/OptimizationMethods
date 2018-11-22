@@ -10,7 +10,7 @@ import kotlin.system.measureNanoTime
 
 class FileImportView : View() {
     private val fileTypeFilterTXT = arrayOf(FileChooser.ExtensionFilter("Data files (*.txt)", "*.txt"))
-    private val fileTypeFilterBIN = arrayOf(FileChooser.ExtensionFilter("Data files (*.bin)", "*.bin"))
+    //    private val fileTypeFilterBIN = arrayOf(FileChooser.ExtensionFilter("Data files (*.bin)", "*.bin"))
     private lateinit var file: String
     private lateinit var files: List<File>
 
@@ -42,29 +42,29 @@ class FileImportView : View() {
                 }
             }
         }
-
-        button("Import bin") {
-            action {
-                //                files = chooseFile("Open ", fileTypeFilterBIN)
-//                file = if (files.isEmpty()) "" else files[0].absolutePath
-//                if (!file.isEmpty()) {
-//                    val inputFS = Input(FileInputStream(file))
-//                    Data.importMap = kryo.readObject(inputFS, backend.MyMap::class.java)
-//                    inputFS.close()
-//                    println("Import serialized map: $file")
-////                    openInternalWindow(DataInputView::class,modal = false)
-////                    replaceWith<DataInputView>()
-//                } else {
-//                    alert(
-//                        type = Alert.AlertType.ERROR,
-//                        header = "Please select file! (*.bin)",
-//                        actionFn = { btnType ->
-//                            if (btnType.buttonData == ButtonBar.ButtonData.OK_DONE) {
-//                            }
-//                        }
-//                    )
-//                }
-            }
-        }
+//
+//        button("Import bin") {
+//            action {
+//                //                files = chooseFile("Open ", fileTypeFilterBIN)
+////                file = if (files.isEmpty()) "" else files[0].absolutePath
+////                if (!file.isEmpty()) {
+////                    val inputFS = Input(FileInputStream(file))
+////                    Data.importMap = kryo.readObject(inputFS, backend.MyMap::class.java)
+////                    inputFS.close()
+////                    println("Import serialized map: $file")
+//////                    openInternalWindow(DataInputView::class,modal = false)
+//////                    replaceWith<DataInputView>()
+////                } else {
+////                    alert(
+////                        type = Alert.AlertType.ERROR,
+////                        header = "Please select file! (*.bin)",
+////                        actionFn = { btnType ->
+////                            if (btnType.buttonData == ButtonBar.ButtonData.OK_DONE) {
+////                            }
+////                        }
+////                    )
+////                }
+//            }
+//        }
     }
 }

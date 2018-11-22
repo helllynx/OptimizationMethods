@@ -42,7 +42,7 @@ class MyMap(
                 0f
             ) / Data.importMap.width).toInt() + 1)
         )
-        //TODO add map dimention sizes
+        //TODO add map dimension sizes
         val endY =
             min(
                 Data.importMap.size,
@@ -75,18 +75,6 @@ class MyMap(
     }
 }
 
-//fun calculate(circles: ArrayList<MyCircleData>) {
-//    circles.forEach { c ->
-//        Data.outputData.add(
-//            AreaOutType(
-//                c.circle,
-//                Data.importMap.getIntersectRectanglesArea(c.circle, Data.importMap),
-//                (Math.pow(c.myCircle.circle.r.toDouble(), 2.0) * Math.PI).toFloat()
-//            )
-//        )
-//    }
-//}
-
 fun newCalculation() {
     fullCleanCircles()
     fullCleanMap()
@@ -96,6 +84,7 @@ fun newCalculation() {
     }
 }
 
+//TODO need something more effective
 fun fullCleanMap() {
     for (row in 0 until Data.importMap.map.size) {
         for (column in 0 until Data.importMap.map.size) {

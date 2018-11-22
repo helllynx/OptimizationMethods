@@ -14,15 +14,14 @@ class MainView : View() {
         left(LeftSide::class)
     }
 
-
     class LeftSide : View() {
         private var x: TextField by singleAssign()
         private var y: TextField by singleAssign()
         private var r: TextField by singleAssign()
 
-        val requestView: RequestView by inject()
-        val outView: OutDataListView by inject()
-        val fileInputView: FileImportView by inject()
+        private val requestView: RequestView by inject()
+        private val outView: OutDataListView by inject()
+        private val fileInputView: FileImportView by inject()
 
         override val root = hbox {
             hbox {
@@ -30,7 +29,7 @@ class MainView : View() {
                     add(fileInputView)
                     form {
                         spacing = 10.0
-                        fieldset("MyCircleData data") {
+                        fieldset("Circle data") {
                             field("X") {
                                 x = textfield()
                             }
@@ -96,23 +95,7 @@ class MainView : View() {
                                 }
                             }
                         }
-                        button("Start auto test") {
-                            action {
-                                if (Data.importMap.size == 0) {
-                                    alert(
-                                        type = Alert.AlertType.ERROR,
-                                        header = "Please select file with data!",
-                                        actionFn = { btnType ->
-                                            if (btnType.buttonData == ButtonBar.ButtonData.OK_DONE) {
-                                            }
-                                        }
-                                    )
-                                } else {
-//                                    massiveTest()
-//                                    Data.outputData.forEach { outView.areas.add(it) }
-                                }
-                            }
-                        }
+
                         button("Clear Out") {
                             action {
                                 outView.areas.clear()
