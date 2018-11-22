@@ -15,14 +15,9 @@ class MyCircleData(var x: Float, var y: Float, var r: Float) {
     var theoreticallyArea: Float = 0f
 }
 
-class IndexFloat {
-    var value: Float
+class IndexFloat(var value: Float) {
     var used: Boolean = false
     var subMap: MutableList<MutableList<IndexFloat>> = mutableListOf()
-
-    constructor(value: Float) {
-        this.value = value
-    }
 }
 
 class MyMap(
@@ -35,26 +30,40 @@ class MyMap(
 
     enum class MapType { OIL, PORO }
 
-    fun getIntersectRectanglesArea(myMyCircleData: MyCircleData, oilMap: MyMap) {
-        val startX = (max(myMyCircleData.x - myMyCircleData.r, 0f) / oilMap.width).toInt()
-        val startY = (max(myMyCircleData.y - myMyCircleData.r, 0f) / oilMap.height).toInt()
-        val endX = min(Data.importMap.size, ((max(myMyCircleData.x + myMyCircleData.r, 0f) / oilMap.width).toInt() + 1))
+    fun getIntersectRectanglesArea(circleIndex: Int) {
+        val startX =
+            (max(Data.inputData[circleIndex].x - Data.inputData[circleIndex].r, 0f) / Data.importMap.width).toInt()
+        val startY =
+            (max(Data.inputData[circleIndex].y - Data.inputData[circleIndex].r, 0f) / Data.importMap.height).toInt()
+        val endX = min(
+            Data.importMap.size,
+            ((max(
+                Data.inputData[circleIndex].x + Data.inputData[circleIndex].r,
+                0f
+            ) / Data.importMap.width).toInt() + 1)
+        )
         //TODO add map dimention sizes
         val endY =
-            min(Data.importMap.size, ((max(myMyCircleData.y + myMyCircleData.r, 0f) / oilMap.height).toInt() + 1))
+            min(
+                Data.importMap.size,
+                ((max(
+                    Data.inputData[circleIndex].y + Data.inputData[circleIndex].r,
+                    0f
+                ) / Data.importMap.height).toInt() + 1)
+            )
 
         try {
             for (i in startY until endY) {
                 for (j in startX until endX) {
-                    if (oilMap.map[i][j].used)
+                    if (Data.importMap.map[i][j].used)
                         continue
                     intersectionArea(
                         Rectangle(
-                            (j * oilMap.width).toFloat(),
-                            (i * oilMap.height).toFloat(),
-                            oilMap.width.toFloat(),
-                            oilMap.height.toFloat()
-                        ), myMyCircleData,
+                            (j * Data.importMap.width).toFloat(),
+                            (i * Data.importMap.height).toFloat(),
+                            Data.importMap.width.toFloat(),
+                            Data.importMap.height.toFloat()
+                        ), circleIndex,
                         i,
                         j
                     )
@@ -79,11 +88,25 @@ class MyMap(
 //}
 
 fun newCalculation() {
+    fullCleanCircles()
+    fullCleanMap()
+
+    for (c in 0 until Data.inputData.size) {
+        Data.importMap.getIntersectRectanglesArea(c)
+    }
+}
+
+fun fullCleanMap() {
+    for (row in 0 until Data.importMap.map.size) {
+        for (column in 0 until Data.importMap.map.size) {
+            Data.importMap.map[row][column].subMap = mutableListOf()
+            Data.importMap.map[row][column].used = false
+        }
+    }
+}
+
+fun fullCleanCircles() {
     for (i in 0 until Data.inputData.size) {
         Data.inputData[i].calculatedArea = 0f
-    }
-
-    for (c in Data.inputData) {
-        Data.importMap.getIntersectRectanglesArea(c, Data.importMap)
     }
 }

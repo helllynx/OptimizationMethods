@@ -113,9 +113,15 @@ class MainView : View() {
                                 }
                             }
                         }
-                        button("Clear") {
+                        button("Clear Out") {
                             action {
                                 outView.areas.clear()
+                            }
+                        }
+                        button("Clear input circles") {
+                            action {
+                                requestView.circles.clear()
+                                Data.inputData.clear()
                             }
                         }
                     }
