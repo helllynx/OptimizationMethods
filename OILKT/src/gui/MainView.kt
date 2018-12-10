@@ -2,6 +2,7 @@ package gui
 
 import backend.Data
 import backend.MyCircleData
+import backend.aggregateSpace
 import backend.newCalculation
 import javafx.collections.FXCollections
 import javafx.scene.control.Alert
@@ -18,6 +19,9 @@ class MainView : View() {
         private var x: TextField by singleAssign()
         private var y: TextField by singleAssign()
         private var r: TextField by singleAssign()
+        private var rate: TextField by singleAssign()
+        private var periodCount: TextField by singleAssign()
+        private var totalSpace: TextField by singleAssign()
 
         private val requestView: RequestView by inject()
         private val outView: OutDataListView by inject()
@@ -39,11 +43,14 @@ class MainView : View() {
                             field("R") {
                                 r = textfield()
                             }
+                            field("Rate") {
+                                rate = textfield()
+                            }
                         }
                         button("Add circle") {
                             action {
-                                if ((!x.text.isFloat() || !y.text.isFloat() || !r.text.isFloat())
-                                    && (!x.text.isInt() || !y.text.isInt() || !r.text.isInt())
+                                if ((!x.text.isFloat() || !y.text.isFloat() || !r.text.isFloat() || !rate.text.isFloat())
+                                    && (!x.text.isInt() || !y.text.isInt() || !r.text.isInt() || !rate.text.isInt())
                                 ) {
                                     alert(
                                         type = Alert.AlertType.ERROR,
@@ -58,14 +65,16 @@ class MainView : View() {
                                         MyCircleData(
                                             x.text.toFloat(),
                                             y.text.toFloat(),
-                                            r.text.toFloat()
+                                            r.text.toFloat(),
+                                            rate.text.toFloat()
                                         )
                                     )
                                     Data.inputData.add(
                                         MyCircleData(
                                             x.text.toFloat(),
                                             y.text.toFloat(),
-                                            r.text.toFloat()
+                                            r.text.toFloat(),
+                                            rate.text.toFloat()
                                         )
                                     )
                                 }
@@ -82,10 +91,19 @@ class MainView : View() {
                                             }
                                         }
                                     )
-                                } else {
+                                } else if (periodCount.text.isEmpty()){
+                                    alert(
+                                        type = Alert.AlertType.ERROR,
+                                        header = "Please enter period count!",
+                                        actionFn = { btnType ->
+                                            if (btnType.buttonData == ButtonBar.ButtonData.OK_DONE) {
+                                            }
+                                        }
+                                    )
+                                }else{
 //                                    calculate(Data.inputData)
-                                    newCalculation()
-
+                                    newCalculation(periodCount.text.toInt())
+                                    totalSpace.text = aggregateSpace().toString()
                                     for (i in 0 until Data.inputData.size) {
                                         Data.inputData[i].theoreticallyArea =
                                                 (Math.pow(Data.inputData[i].r.toDouble(), 2.0) * Math.PI).toFloat()
@@ -107,6 +125,16 @@ class MainView : View() {
                                 Data.inputData.clear()
                             }
                         }
+                        fieldset("Period data") {
+                            field("Period count") {
+                                periodCount = textfield()
+                            }
+                        }
+                        fieldset("TOTAL") {
+                            field("Total space") {
+                                totalSpace = textfield()
+                            }
+                        }
                     }
                 }
                 add(requestView)
@@ -118,13 +146,14 @@ class MainView : View() {
     }
 
     class RequestView : View() {
-        val circles = FXCollections.observableArrayList<MyCircleData>()
+        val circles = FXCollections.observableArrayList<MyCircleData>()!!
 
         override val root = tableview<MyCircleData> {
             items = circles
             column("X", MyCircleData::x)
             column("Y", MyCircleData::y)
             column("R", MyCircleData::r)
+            column("Rate", MyCircleData::growRate)
         }
     }
 }

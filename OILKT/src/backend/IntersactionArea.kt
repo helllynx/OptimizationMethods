@@ -5,11 +5,8 @@ import kotlin.math.sqrt
 fun intersectionArea(rect: Rectangle, circleIndex: Int, i: Int, j: Int) {
     if (Data.importMap.map[i][j].used)
         return
-
     val circlesToCheck = checkRectangle(rect)
-
     calculateThisShitSomehow(circlesToCheck, i, j)
-
 }
 
 fun calculateThisShitSomehow(circles: BooleanArray, i: Int, j: Int) {
@@ -79,25 +76,6 @@ fun checkCircle(myMyCircleData: MyCircleData, rect: Rectangle): Boolean {
 fun getDistance2(xr: Float, yr: Float, xc: Float, yc: Float): Float {
     return sqrt(Math.pow((xr - xc).toDouble(), 2.0) + Math.pow((yr - yc).toDouble(), 2.0)).toFloat()
 }
-//
-//fun massiveTest() {
-//    val n = Data.importMap.size * Data.importMap.width
-//    for (i in 1..n step 1) {
-//        val r = round((Math.random() * i).toFloat())
-//        val x = r + round((Math.random() * i)).toFloat()
-//        val y = r + round(Math.random() * i).toFloat()
-//        val c = MyCircleData(x, y, r)
-//
-//        Data.inputData.add(MyCircleData(c))
-//        Data.outputData.add(
-//            AreaOutType(
-//                c,
-//                Data.importMap.getIntersectRectanglesArea(c, Data.importMap),
-//                (Math.pow(r.toDouble(), 2.0) * Math.PI).toFloat()
-//            )
-//        )
-//    }
-//}
 
 fun indexFloatFill(filler: Float, height: Int, width: Int): MutableList<MutableList<IndexFloat>> {
     val result: MutableList<MutableList<IndexFloat>> = mutableListOf()
@@ -110,7 +88,6 @@ fun indexFloatFill(filler: Float, height: Int, width: Int): MutableList<MutableL
     }
     return result
 }
-
 
 fun BooleanArray.trueCount(): Int {
     var count = 0

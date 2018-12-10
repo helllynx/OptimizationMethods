@@ -10,7 +10,7 @@ class Data {
     }
 }
 
-class MyCircleData(var x: Float, var y: Float, var r: Float) {
+class MyCircleData(var x: Float, var y: Float, var r: Float, var growRate: Float) {
     var calculatedArea: Float = 0f
     var theoreticallyArea: Float = 0f
 }
@@ -75,12 +75,30 @@ class MyMap(
     }
 }
 
-fun newCalculation() {
-    fullCleanCircles()
-    fullCleanMap()
+fun newCalculation(periodCount: Int) {
+    repeat(periodCount) {
+        fullCleanMap()
 
-    for (c in 0 until Data.inputData.size) {
-        Data.importMap.getIntersectRectanglesArea(c)
+        for (c in 0 until Data.inputData.size) {
+            Data.importMap.getIntersectRectanglesArea(c)
+        }
+        rizeCircleRadius()
+    }
+//    fullCleanCircles()
+}
+
+fun aggregateSpace(): Float{
+    var space = 0f
+    for (c in Data.inputData) {
+        space += c.calculatedArea
+    }
+
+    return space
+}
+
+fun rizeCircleRadius(){
+    for(i in 0 until Data.inputData.size) {
+        Data.inputData[i].r += Data.inputData[i].growRate
     }
 }
 
