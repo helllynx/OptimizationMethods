@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="baa462e5-c07f-4609-9af2-c2fcd2a833e2" name="Default Changelist" comment="Add interface, ugly but...">
-      <change beforePath="$PROJECT_DIR$/../OIL/data_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/../OIL/data_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../OIL/generated_data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../OIL/generated_data.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OIL.txt" beforeDir="false" afterPath="$PROJECT_DIR$/OIL.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/IntersactionArea.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/IntersactionArea.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OILKT.iml" beforeDir="false" afterPath="$PROJECT_DIR$/OILKT.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/backend/MyMap.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/MyMap.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/backend/Parser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/backend/Parser.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/data.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/FileImportView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/FileImportView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/MainView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/MainView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/MapView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/MapView.kt" afterDir="false" />
     </list>
@@ -44,156 +38,16 @@
     <expand />
     <select />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-197917280">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="12" />
-          <entry key="project.open.time.14" value="1" />
-          <entry key="project.open.time.15" value="1" />
-          <entry key="project.open.time.17" value="1" />
-          <entry key="project.open.time.19" value="1" />
-          <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.30" value="1" />
-          <entry key="project.open.time.31" value="1" />
-          <entry key="project.open.time.32" value="1" />
-          <entry key="project.open.time.36" value="1" />
-          <entry key="project.open.time.37" value="1" />
-          <entry key="project.open.time.38" value="1" />
-          <entry key="project.open.time.49" value="1" />
-          <entry key="project.opened" value="13" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="class" value="7" />
-          <entry key="iml" value="1" />
-          <entry key="java" value="4" />
-          <entry key="kt" value="24" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="CLASS" value="7" />
-          <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="4" />
-          <entry key="Kotlin" value="24" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="java" value="6" />
-          <entry key="kt" value="10220" />
-          <entry key="txt" value="113" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="6" />
-          <entry key="Kotlin" value="10220" />
-          <entry key="PLAIN_TEXT" value="113" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="-1159057089">
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="kt" value="1698" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Kotlin" value="1698" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="kt" value="5" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Kotlin" value="5" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="1077767745">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="24" />
-          <entry key="project.open.time.10" value="3" />
-          <entry key="project.open.time.11" value="3" />
-          <entry key="project.open.time.12" value="2" />
-          <entry key="project.open.time.13" value="1" />
-          <entry key="project.open.time.18" value="1" />
-          <entry key="project.open.time.20" value="1" />
-          <entry key="project.open.time.28" value="1" />
-          <entry key="project.open.time.30" value="1" />
-          <entry key="project.open.time.31" value="2" />
-          <entry key="project.open.time.34" value="1" />
-          <entry key="project.open.time.37" value="1" />
-          <entry key="project.open.time.39" value="2" />
-          <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="2" />
-          <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="26" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="class" value="1" />
-          <entry key="kotlin_builtins" value="4" />
-          <entry key="kt" value="17" />
-          <entry key="txt" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="CLASS" value="1" />
-          <entry key="JAVA" value="1" />
-          <entry key="Kotlin" value="29" />
-          <entry key="PLAIN_TEXT" value="12" />
-          <entry key="kotlin_builtins" value="4" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="kt" value="4409" />
-          <entry key="txt" value="132" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Kotlin" value="5510" />
-          <entry key="PLAIN_TEXT" value="161" />
-          <entry key="Python" value="7" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FavoritesManager">
     <favorites_list name="OILKT" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/backend/Parser.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="988">
-              <caret line="38" selection-start-line="38" selection-end-line="38" />
-              <folding>
-                <element signature="e#17#70#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/FileImportView.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="9" lean-forward="true" selection-end-line="70" />
+            <state relative-caret-position="-460">
+              <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
               <folding>
                 <element signature="e#13#212#0" expanded="true" />
               </folding>
@@ -202,19 +56,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/OIL.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="52">
-              <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/MyMap.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="951">
-              <caret line="55" selection-start-line="55" selection-end-line="55" />
+            <state relative-caret-position="1978">
+              <caret line="86" column="5" lean-forward="true" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
               <folding>
                 <element signature="e#17#66#0" expanded="true" />
               </folding>
@@ -225,17 +70,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/IntersactionArea.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2184">
+            <state relative-caret-position="783">
               <caret line="84" column="32" selection-start-line="84" selection-start-column="32" selection-end-line="84" selection-end-column="32" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/MainView.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="92" column="41" lean-forward="true" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
+            <state relative-caret-position="4439">
+              <caret line="193" column="5" lean-forward="true" selection-start-line="193" selection-start-column="5" selection-end-line="193" selection-end-column="5" />
               <folding>
                 <element signature="e#13#326#0" expanded="true" />
               </folding>
@@ -246,20 +91,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/MyApp.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="18" column="45" lean-forward="true" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
+            <state relative-caret-position="345">
+              <caret line="18" column="45" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/gui/MapView.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-528">
+              <caret line="7" column="31" lean-forward="true" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui/MapView.kt">
+        <entry file="jar://$USER_HOME$/SOFT/jdk1.8.0_191/javafx-src.zip!/javafx/scene/chart/XYChart.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="7" column="13" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="13" />
-              <folding>
-                <element signature="e#13#84#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="284">
+              <caret line="1409" column="15" selection-start-line="1409" selection-start-column="15" selection-end-line="1409" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -267,7 +118,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/data.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
+            <state relative-caret-position="69">
               <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
             </state>
           </provider>
@@ -276,7 +127,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/OutDataListView.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
+            <state relative-caret-position="368">
               <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
             </state>
           </provider>
@@ -294,8 +145,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>decimal</find>
-      <find>Math.Pow</find>
       <find>.ToString()</find>
       <find>Ex</find>
       <find>getIntersectRectangles</find>
@@ -324,6 +173,8 @@
       <find>myMyCircleData</find>
       <find>circleIndex</find>
       <find>oilMap</find>
+      <find>hbox</find>
+      <find>root</find>
     </findStrings>
     <replaceStrings>
       <replace>y</replace>
@@ -376,79 +227,21 @@
         <option value="$PROJECT_DIR$/convert_data.py" />
         <option value="$PROJECT_DIR$/out.txt" />
         <option value="$PROJECT_DIR$/src/backend/Parser.kt" />
-        <option value="$PROJECT_DIR$/src/backend/MyMap.kt" />
         <option value="$PROJECT_DIR$/src/backend/IntersactionArea.kt" />
         <option value="$PROJECT_DIR$/src/data.txt" />
         <option value="$PROJECT_DIR$/OIL.txt" />
         <option value="$PROJECT_DIR$/src/gui/FileImportView.kt" />
+        <option value="$PROJECT_DIR$/src/backend/MyMap.kt" />
         <option value="$PROJECT_DIR$/src/gui/MainView.kt" />
         <option value="$PROJECT_DIR$/src/gui/MapView.kt" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1284" />
-    <option name="width" value="1276" />
-    <option name="height" value="1410" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State />
-          <State>
-            <id>Android</id>
-          </State>
-          <State>
-            <id>CorrectnessLintAndroid</id>
-          </State>
-          <State>
-            <id>GSPGrailsGroovy</id>
-          </State>
-          <State>
-            <id>General</id>
-          </State>
-          <State>
-            <id>GrailsGroovy</id>
-          </State>
-          <State>
-            <id>Groovy</id>
-          </State>
-          <State>
-            <id>Kotlin</id>
-          </State>
-          <State>
-            <id>LintAndroid</id>
-          </State>
-          <State>
-            <id>Maven</id>
-          </State>
-          <State>
-            <id>PerformanceLintAndroid</id>
-          </State>
-          <State>
-            <id>Plugin DevKit</id>
-          </State>
-          <State>
-            <id>Python</id>
-          </State>
-          <State>
-            <id>XPath</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>PyInterpreterInspection</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
+    <option name="x" value="-1" />
+    <option name="y" value="23" />
+    <option name="width" value="1922" />
+    <option name="height" value="1036" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -457,6 +250,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -485,7 +279,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -495,15 +288,15 @@
     <property name="SearchEverywhereHistoryKey" value="growRate&#9;null&#9;null&#10;Circle&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544555126726" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544616983883" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.webservices" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.importing" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -523,8 +316,8 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.AppGui">
-    <configuration name="AppGui" type="Application" factoryName="Application" singleton="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/SOFT/SOFT/jdk1.8.0_191" />
+    <configuration name="AppGui" type="Application" factoryName="Application" singleton="false">
+      <option name="ALTERNATIVE_JRE_PATH" value="$USER_HOME$/SOFT/jdk1.8.0_191" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="gui.MyApp" />
       <module name="OILKT" />
@@ -628,6 +421,8 @@
       <workItem from="1544462369669" duration="1058000" />
       <workItem from="1544541795169" duration="3596000" />
       <workItem from="1544546232884" duration="6037000" />
+      <workItem from="1544608313965" duration="99000" />
+      <workItem from="1544608479898" duration="6713000" />
     </task>
     <task id="LOCAL-00001" summary="Add interface, ugly but...">
       <created>1541420119027</created>
@@ -675,13 +470,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153787000" />
+    <option name="totallyTimeSpent" value="160599000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="2560" height="1410" extended-state="6" />
+    <frame x="-1" y="23" width="1922" height="1036" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49423394" visible="true" weight="0.07319014" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49423394" visible="true" weight="0.13340448" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -697,6 +492,7 @@
       <window_info anchor="bottom" id="Database Changes" order="6" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32603598" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
       <window_info anchor="right" id="Material Palette" order="0" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
@@ -708,10 +504,11 @@
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Maven Projects" order="9" />
       <window_info anchor="right" id="Debug" order="10" sideWeight="0.49960908" weight="0.73170733" />
-      <window_info anchor="right" id="Run" order="11" sideWeight="0.49960908" weight="0.19689737" />
-      <window_info anchor="right" id="Messages" order="12" weight="0.3826571" />
+      <window_info anchor="right" id="Run" order="11" sideWeight="0.49960908" visible="true" weight="0.19637139" />
+      <window_info anchor="right" id="Messages" order="12" weight="0.38260406" />
       <window_info anchor="right" id="Coverage" order="13" sideWeight="0.50039095" side_tool="true" weight="0.39936358" />
       <window_info anchor="right" id="SciView" order="14" />
+      <window_info anchor="right" id="Maven" order="15" />
     </layout>
     <layout-to-restore>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49423394" visible="true" weight="0.14638028" />
@@ -783,9 +580,20 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
@@ -806,19 +614,19 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/backend/MyMap.kt</url>
-          <line>92</line>
+          <line>93</line>
           <properties />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/backend/MyMap.kt</url>
-          <line>100</line>
+          <line>101</line>
           <properties />
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/backend/MyMap.kt</url>
-          <line>99</line>
+          <line>100</line>
           <properties />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
@@ -859,9 +667,6 @@
           <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
-      <breakpoints-dialog>
-        <breakpoints-dialog />
-      </breakpoints-dialog>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -1032,23 +837,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/data.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/OutDataListView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$USER_HOME$/SOFT/SOFT/jdk1.8.0_191/javafx-src.zip!/javafx/scene/control/TextInputControl.java" />
     <entry file="file://$PROJECT_DIR$/src/backend/Parser.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="988">
+        <state relative-caret-position="851">
           <caret line="38" selection-start-line="38" selection-end-line="38" />
           <folding>
             <element signature="e#17#70#0" expanded="true" />
@@ -1058,29 +850,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/OIL.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
+        <state relative-caret-position="46">
           <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/SOFT/SOFT/jdk1.8.0_191/javafx-src.zip!/javafx/scene/control/TextInputControl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="348" column="22" selection-start-line="348" selection-start-column="22" selection-end-line="348" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/IntersactionArea.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2184">
+        <state relative-caret-position="783">
           <caret line="84" column="32" selection-start-line="84" selection-start-column="32" selection-end-line="84" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/OutDataListView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/FileImportView.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="9" lean-forward="true" selection-end-line="70" />
+        <state relative-caret-position="-460">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
           <folding>
             <element signature="e#13#212#0" expanded="true" />
           </folding>
@@ -1089,25 +881,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/MyApp.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="18" column="45" lean-forward="true" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
+        <state relative-caret-position="345">
+          <caret line="18" column="45" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/MapView.kt">
+    <entry file="jar://$USER_HOME$/SOFT/jdk1.8.0_191/src.zip!/javax/swing/text/Segment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="e#13#84#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="284">
+          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/MyMap.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="951">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
+        <state relative-caret-position="1978">
+          <caret line="86" column="5" lean-forward="true" selection-start-line="86" selection-start-column="5" selection-end-line="86" selection-end-column="5" />
           <folding>
             <element signature="e#17#66#0" expanded="true" />
           </folding>
@@ -1116,11 +905,53 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/MainView.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="92" column="41" lean-forward="true" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
+        <state relative-caret-position="4439">
+          <caret line="193" column="5" lean-forward="true" selection-start-line="193" selection-start-column="5" selection-end-line="193" selection-end-column="5" />
           <folding>
             <element signature="e#13#326#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/tornadofx-1.7.17.jar!/tornadofx/LayoutsKt.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="77" column="40" selection-start-line="77" selection-start-column="36" selection-end-line="77" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/tornadofx-1.7.17.jar!/tornadofx/View.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="5" column="180" selection-start-line="5" selection-start-column="180" selection-end-line="5" selection-end-column="180" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/tornadofx-1.7.17.jar!/tornadofx/UIComponent.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="52" column="28" selection-start-line="52" selection-start-column="24" selection-end-line="52" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/SOFT/jdk1.8.0_191/javafx-src.zip!/javafx/scene/chart/XYChart.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="1409" column="15" selection-start-line="1409" selection-start-column="15" selection-end-line="1409" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/MapView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-528">
+          <caret line="7" column="31" lean-forward="true" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1202,7 +1033,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>lib</last-edited>
+          <last-edited>KotlinJavaRuntime</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

@@ -76,13 +76,14 @@ class MyMap(
 }
 
 fun newCalculation(periodCount: Int) {
+//    fullCleanCircles()
     repeat(periodCount) {
         fullCleanMap()
 
         for (c in 0 until Data.inputData.size) {
             Data.importMap.getIntersectRectanglesArea(c)
         }
-        rizeCircleRadius()
+        riseCircleRadius()
     }
 //    fullCleanCircles()
 }
@@ -96,7 +97,7 @@ fun aggregateSpace(): Double {
     return space
 }
 
-fun rizeCircleRadius() {
+fun riseCircleRadius() {
     for (i in 0 until Data.inputData.size) {
         Data.inputData[i].r += Data.inputData[i].growRate
     }
@@ -112,8 +113,8 @@ fun fullCleanMap() {
     }
 }
 
-fun fullCleanCircles() {
-    for (i in 0 until Data.inputData.size) {
-        Data.inputData[i].calculatedArea = 0.0
-    }
-}
+//fun fullCleanCircles() {
+//    for (i in 0 until Data.inputData.size) {
+//        Data.inputData[i].calculatedArea = 0.0
+//    }
+//}

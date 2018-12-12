@@ -178,6 +178,11 @@ class MainView : View() {
                                     "height: ${Data.importMap.height}\n" +
                                     "width: ${Data.importMap.width}"
                         }
+                        button("TEST") {
+                            action {
+                                openInternalWindow<MapView>()
+                            }
+                        }
                     }
                 }
                 add(requestView)
