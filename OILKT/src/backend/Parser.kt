@@ -32,7 +32,7 @@ fun parse(pathToFile: String): MyMap {
 
     val arrayData = data[3]
         .split(" ")
-        .map { IndexFloat(it.toFloat()) }
+        .map { IndexFloat(it.toDouble()) }
         .windowed(sizeX, sizeX)
         .toCollection(ArrayList(sizeX * sizeY))
 

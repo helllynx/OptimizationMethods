@@ -77,7 +77,7 @@ fun getDistance2(xr: Float, yr: Float, xc: Float, yc: Float): Float {
     return sqrt(Math.pow((xr - xc).toDouble(), 2.0) + Math.pow((yr - yc).toDouble(), 2.0)).toFloat()
 }
 
-fun indexFloatFill(filler: Float, height: Int, width: Int): MutableList<MutableList<IndexFloat>> {
+fun indexFloatFill(filler: Double, height: Int, width: Int): MutableList<MutableList<IndexFloat>> {
     val result: MutableList<MutableList<IndexFloat>> = mutableListOf()
 
     for (i in 0 until height) {

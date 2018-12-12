@@ -11,11 +11,11 @@ class Data {
 }
 
 class MyCircleData(var x: Float, var y: Float, var r: Float, var growRate: Float) {
-    var calculatedArea: Float = 0f
+    var calculatedArea: Double = 0.0
     var theoreticallyArea: Float = 0f
 }
 
-class IndexFloat(var value: Float) {
+class IndexFloat(var value: Double) {
     var used: Boolean = false
     var subMap: MutableList<MutableList<IndexFloat>> = mutableListOf()
 }
@@ -87,8 +87,8 @@ fun newCalculation(periodCount: Int) {
 //    fullCleanCircles()
 }
 
-fun aggregateSpace(): Float{
-    var space = 0f
+fun aggregateSpace(): Double {
+    var space = 0.0
     for (c in Data.inputData) {
         space += c.calculatedArea
     }
@@ -96,8 +96,8 @@ fun aggregateSpace(): Float{
     return space
 }
 
-fun rizeCircleRadius(){
-    for(i in 0 until Data.inputData.size) {
+fun rizeCircleRadius() {
+    for (i in 0 until Data.inputData.size) {
         Data.inputData[i].r += Data.inputData[i].growRate
     }
 }
@@ -114,6 +114,6 @@ fun fullCleanMap() {
 
 fun fullCleanCircles() {
     for (i in 0 until Data.inputData.size) {
-        Data.inputData[i].calculatedArea = 0f
+        Data.inputData[i].calculatedArea = 0.0
     }
 }

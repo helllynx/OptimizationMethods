@@ -17,7 +17,7 @@ class FileImportView : View() {
     override val root = vbox {
         paddingAll = 10.0
         spacing = 10.0
-        button("Read txt") {
+        button("Open data") {
             action {
                 files = chooseFile("Open ", fileTypeFilterTXT)
                 file = if (files.isEmpty()) "" else files[0].absolutePath

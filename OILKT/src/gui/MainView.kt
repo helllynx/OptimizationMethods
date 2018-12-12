@@ -9,6 +9,7 @@ import javafx.scene.control.Alert
 import javafx.scene.control.ButtonBar
 import javafx.scene.control.TextField
 import tornadofx.*
+import kotlin.system.measureNanoTime
 
 class MainView : View() {
     override val root = borderpane {
@@ -82,8 +83,8 @@ class MainView : View() {
                         }
                         button("Start calculation") {
                             action {
-                                if (Data.importMap.size == 0) {
-                                    alert(
+                                when {
+                                    Data.importMap.size == 0 -> alert(
                                         type = Alert.AlertType.ERROR,
                                         header = "Please select file with data!",
                                         actionFn = { btnType ->
@@ -91,8 +92,7 @@ class MainView : View() {
                                             }
                                         }
                                     )
-                                } else if (periodCount.text.isEmpty()){
-                                    alert(
+                                    periodCount.text.isEmpty() -> alert(
                                         type = Alert.AlertType.ERROR,
                                         header = "Please enter period count!",
                                         actionFn = { btnType ->
@@ -100,16 +100,51 @@ class MainView : View() {
                                             }
                                         }
                                     )
-                                }else{
-//                                    calculate(Data.inputData)
-                                    newCalculation(periodCount.text.toInt())
-                                    totalSpace.text = aggregateSpace().toString()
-                                    for (i in 0 until Data.inputData.size) {
-                                        Data.inputData[i].theoreticallyArea =
-                                                (Math.pow(Data.inputData[i].r.toDouble(), 2.0) * Math.PI).toFloat()
-                                    }
+                                    else -> {
 
-                                    Data.inputData.forEach { outView.areas.add(it) }
+                                        // KIRILL TEST DATA = 352845
+                                        //                                    Data.inputData.add(MyCircleData(0f, 50f, 100f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(300f, 350f, 100f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(50f, 0f, 100f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(50f, 1f, 120f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(14f, 100f, 10f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(50f, 100f, 60f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(50f, 1f, 70f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(400f, 600f, 350f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(400f, 600f, 30f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(400f, 600f, 100f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(400f, 600f, 10f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(400f, 600f, 220f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(33f, 356f, 50f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(200f, 300f, 50f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(200f, 300f, 100f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(200f, 300f, 200f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(200f, 300f, 5f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(200f, 300f, 10f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(200f, 300f, 15f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(200f, 300f, 166f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(200f, 300f, 1f, 0f))
+
+                                        // Another set third
+                                        //                                    Data.inputData.add(MyCircleData(50f, 40f, 20f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(50f, 60f, 20f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(30f, 50f, 20f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(50f, 80f, 10f, 0f))
+
+                                        // Another set fourth
+                                        //                                    Data.inputData.add(MyCircleData(50f, 70f, 20f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(30f, 60f, 20f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(70f, 50f, 30f, 0f))
+                                        //                                    Data.inputData.add(MyCircleData(40f, 40f, 30f, 0f))
+
+                                        // Another set data1
+                                        //                                    Data.inputData.add(MyCircleData(5000f, 5000f, 100f, 50f))
+
+                                        measureNanoTime { newCalculation(periodCount.text.toInt()) }.apply(::println)
+                                        totalSpace.text = aggregateSpace().toString()
+
+                                        Data.inputData.forEach { outView.areas.add(it) }
+                                    }
                                 }
                             }
                         }
@@ -134,6 +169,14 @@ class MainView : View() {
                             field("Total space") {
                                 totalSpace = textfield()
                             }
+                        }
+                        fieldset("MAP parameters") {
+
+                        }
+                        label {
+                            text = "X: ${Data.importMap.size}  Y: ${Data.importMap.size}\n" +
+                                    "height: ${Data.importMap.height}\n" +
+                                    "width: ${Data.importMap.width}"
                         }
                     }
                 }
