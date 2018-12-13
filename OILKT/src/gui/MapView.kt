@@ -6,12 +6,16 @@ import javafx.application.Application
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
-import javafx.scene.paint.Color.color
 import tornadofx.View
+import tornadofx.circle
 import tornadofx.group
-import kotlin.random.Random.Default.nextDouble
+import kotlin.random.Random
+
 
 class MapView : View() {
+
+    val height = 1000.0
+    val width = 1000.0
 
     override val root = group {
         Data.inputData.add(MyCircleData(0f, 50f, 100f, 0f))
@@ -36,11 +40,22 @@ class MapView : View() {
         Data.inputData.add(MyCircleData(200f, 300f, 166f, 0f))
         Data.inputData.add(MyCircleData(200f, 300f, 1f, 0f))
 
-        val canvas = Canvas(1000.0, 1000.0)
-        canvas.scaleY = -1.0
+        val canvas = Canvas(width, height)
         val gc = canvas.graphicsContext2D
         drawShapes(gc)
         add(canvas)
+
+        val scale = 0.8
+
+        for (c in Data.inputData) {
+            add(circle {
+                centerX = c.x.toDouble()*scale
+                centerY = c.y.toDouble()*scale
+                radius = c.r.toDouble()*scale
+                fill = Color.TRANSPARENT
+                stroke = Color.color(Random.nextDouble(), Random.nextDouble(), Random.nextDouble())
+            })
+        }
     }
 
 //    override fun start(primaryStage: Stage) {
@@ -55,39 +70,34 @@ class MapView : View() {
 //    }
 
     private fun drawShapes(gc: GraphicsContext) {
-//        gc.fill = Color.CHARTREUSE
-        gc.stroke = Color.BLUE
+        val spacing = 10.0
 
+        val hLineCount = Math.floor((height + 1) / spacing).toInt()
+        val vLineCount = Math.floor((width + 1) / spacing).toInt()
 
-        for (c in Data.inputData) {
-            gc.stroke = color(nextDouble(), nextDouble(), nextDouble())
-            gc.strokeOval(c.x.toDouble(), c.y.toDouble(), c.r.toDouble(), c.r.toDouble())
+        gc.stroke = Color.BLACK
+        gc.lineWidth = 0.05
+        for (i in 0 until hLineCount) {
+            gc.strokeLine(0.0, snap((i + 1) * spacing), width, snap((i + 1) * spacing))
         }
 
-////        gc.lineWidth = 5.0
-//        gc.strokeLine(40.0, 10.0, 10.0, 40.0)
-//        gc.fillOval(10.0, 60.0, 30.0, 30.0)
-//        gc.strokeOval(60.0, 60.0, 30.0, 60.0)
-//        gc.fillRoundRect(110.0, 60.0, 30.0, 30.0, 10.0, 10.0)
-//        gc.strokeRoundRect(160.0, 60.0, 30.0, 30.0, 10.0, 10.0)
-//        gc.fillArc(10.0, 110.0, 30.0, 30.0, 45.0, 240.0, ArcType.OPEN)
-//        gc.fillArc(60.0, 110.0, 30.0, 30.0, 45.0, 240.0, ArcType.CHORD)
-//        gc.fillArc(110.0, 110.0, 30.0, 30.0, 45.0, 240.0, ArcType.ROUND)
-//        gc.strokeArc(10.0, 160.0, 30.0, 30.0, 45.0, 240.0, ArcType.OPEN)
-//        gc.strokeArc(60.0, 160.0, 30.0, 30.0, 45.0, 240.0, ArcType.CHORD)
-//        gc.strokeArc(110.0, 160.0, 30.0, 30.0, 45.0, 240.0, ArcType.ROUND)
-//        gc.fillPolygon(
-//            doubleArrayOf(10.0, 40.0, 10.0, 40.0),
-//            doubleArrayOf(210.0, 210.0, 240.0, 240.0), 4
-//        )
-//        gc.strokePolygon(
-//            doubleArrayOf(60.0, 90.0, 60.0, 90.0),
-//            doubleArrayOf(210.0, 210.0, 240.0, 240.0), 4
-//        )
-//        gc.strokePolyline(
-//            doubleArrayOf(110.0, 140.0, 110.0, 140.0),
-//            doubleArrayOf(210.0, 210.0, 240.0, 240.0), 4
-//        )
+        gc.stroke = Color.BLACK
+        for (i in 0 until vLineCount) {
+            gc.strokeLine(snap((i + 1) * spacing), 0.0, snap((i + 1) * spacing), height)
+        }
+
+        gc.lineWidth = 1.0
+//
+//        for (c in Data.inputData) {
+//            gc.stroke = Color.color(Random.nextDouble(), Random.nextDouble(), Random.nextDouble())
+//            gc.strokeOval(c.x.toDouble()-c.r.toDouble(), c.y.toDouble()-c.r.toDouble(), c.r.toDouble(), c.r.toDouble())
+//        }
+
+
+    }
+
+    private fun snap(y: Double): Double {
+        return y.toInt() + 0.5
     }
 
     companion object {
