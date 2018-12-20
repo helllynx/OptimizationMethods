@@ -1,7 +1,6 @@
 package gui
 
 import backend.Data
-import backend.MyCircleData
 import javafx.application.Application
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
@@ -18,27 +17,6 @@ class MapView : View() {
     val width = 1000.0
 
     override val root = group {
-        Data.inputData.add(MyCircleData(0f, 50f, 100f, 0f))
-        Data.inputData.add(MyCircleData(300f, 350f, 100f, 0f))
-        Data.inputData.add(MyCircleData(50f, 0f, 100f, 0f))
-        Data.inputData.add(MyCircleData(50f, 1f, 120f, 0f))
-        Data.inputData.add(MyCircleData(14f, 100f, 10f, 0f))
-        Data.inputData.add(MyCircleData(50f, 100f, 60f, 0f))
-        Data.inputData.add(MyCircleData(50f, 1f, 70f, 0f))
-        Data.inputData.add(MyCircleData(400f, 600f, 350f, 0f))
-        Data.inputData.add(MyCircleData(400f, 600f, 30f, 0f))
-        Data.inputData.add(MyCircleData(400f, 600f, 100f, 0f))
-        Data.inputData.add(MyCircleData(400f, 600f, 10f, 0f))
-        Data.inputData.add(MyCircleData(400f, 600f, 220f, 0f))
-        Data.inputData.add(MyCircleData(33f, 356f, 50f, 0f))
-        Data.inputData.add(MyCircleData(200f, 300f, 50f, 0f))
-        Data.inputData.add(MyCircleData(200f, 300f, 100f, 0f))
-        Data.inputData.add(MyCircleData(200f, 300f, 200f, 0f))
-        Data.inputData.add(MyCircleData(200f, 300f, 5f, 0f))
-        Data.inputData.add(MyCircleData(200f, 300f, 10f, 0f))
-        Data.inputData.add(MyCircleData(200f, 300f, 15f, 0f))
-        Data.inputData.add(MyCircleData(200f, 300f, 166f, 0f))
-        Data.inputData.add(MyCircleData(200f, 300f, 1f, 0f))
 
         val canvas = Canvas(width, height)
         val gc = canvas.graphicsContext2D

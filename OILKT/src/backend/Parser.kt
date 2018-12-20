@@ -25,8 +25,8 @@ fun parse(pathToFile: String): MyMap {
 
     val sizeX = data[1].split(" ")[0].toInt()
     val sizeY = data[1].split(" ")[1].toInt()
-    val height = data[2].split(" ")[1].toInt()
-    val width = data[2].split(" ")[1].toInt()
+    val height = data[2].split(" ")[1].toByte()
+    val width = data[2].split(" ")[1].toByte()
 
     println("started")
 
@@ -36,5 +36,5 @@ fun parse(pathToFile: String): MyMap {
         .windowed(sizeX, sizeX)
         .toCollection(ArrayList(sizeX * sizeY))
 
-    return MyMap(arrayData, oilMapType, height, width, sizeX)
+    return MyMap(arrayData, oilMapType, height, width, sizeX, sizeY)
 }

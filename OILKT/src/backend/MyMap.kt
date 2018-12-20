@@ -16,16 +16,16 @@ class MyCircleData(var x: Float, var y: Float, var r: Float, var growRate: Float
 }
 
 class IndexFloat(var value: Double) {
-    var used: Boolean = false
-    var subMap: MutableList<MutableList<IndexFloat>> = mutableListOf()
+    var subMap: BooleanArray = booleanArrayOf()
 }
 
 class MyMap(
     var map: ArrayList<List<IndexFloat>> = arrayListOf(),
     var mapType: MapType = MapType.OIL,
-    var height: Int = 0,
-    var width: Int = 0,
-    var size: Int = 0
+    var height: Byte = 0,
+    var width: Byte = 0,
+    var sizeX: Int = 0,
+    var sizeY: Int = 0
 ) {
 
     enum class MapType { OIL, PORO }
@@ -36,7 +36,7 @@ class MyMap(
         val startY =
             (max(Data.inputData[circleIndex].y - Data.inputData[circleIndex].r, 0f) / Data.importMap.height).toInt()
         val endX = min(
-            Data.importMap.size,
+            Data.importMap.sizeX,
             ((max(
                 Data.inputData[circleIndex].x + Data.inputData[circleIndex].r,
                 0f
@@ -45,7 +45,7 @@ class MyMap(
         //TODO add map dimension sizes
         val endY =
             min(
-                Data.importMap.size,
+                Data.importMap.sizeY,
                 ((max(
                     Data.inputData[circleIndex].y + Data.inputData[circleIndex].r,
                     0f
@@ -55,8 +55,8 @@ class MyMap(
         try {
             for (i in startY until endY) {
                 for (j in startX until endX) {
-                    if (Data.importMap.map[i][j].used)
-                        continue
+//                    if (Data.importMap.map[i][j].used)
+//                        continue
                     intersectionArea(
                         Rectangle(
                             (j * Data.importMap.width).toFloat(),
@@ -107,11 +107,14 @@ fun riseCircleRadius() {
 fun fullCleanMap() {
     for (row in 0 until Data.importMap.map.size) {
         for (column in 0 until Data.importMap.map.size) {
-            Data.importMap.map[row][column].subMap = mutableListOf()
-            Data.importMap.map[row][column].used = false
+            Data.importMap.map[row][column].subMap = booleanArrayOf()
         }
     }
 }
+data class Pair(
+    var first: Byte,
+    var second: Byte
+)
 
 //fun fullCleanCircles() {
 //    for (i in 0 until Data.inputData.size) {

@@ -9,6 +9,7 @@ import javafx.scene.control.Alert
 import javafx.scene.control.ButtonBar
 import javafx.scene.control.TextField
 import tornadofx.*
+import kotlin.random.Random
 import kotlin.system.measureNanoTime
 
 class MainView : View() {
@@ -84,7 +85,7 @@ class MainView : View() {
                         button("Start calculation") {
                             action {
                                 when {
-                                    Data.importMap.size == 0 -> alert(
+                                    Data.importMap.sizeX == 0 -> alert(
                                         type = Alert.AlertType.ERROR,
                                         header = "Please select file with data!",
                                         actionFn = { btnType ->
@@ -101,6 +102,31 @@ class MainView : View() {
                                         }
                                     )
                                     else -> {
+
+                                        for (i in 0..20) {
+                                            Data.inputData.add(
+                                                MyCircleData(
+                                                    Random.nextDouble(
+                                                        500.0,
+                                                        (Data.importMap.sizeX * Data.importMap.width).toDouble()
+                                                    ).toFloat(),
+                                                    Random.nextDouble(
+                                                        500.0,
+                                                        (Data.importMap.sizeY * Data.importMap.height).toDouble()
+                                                    ).toFloat(),
+                                                    Random.nextDouble(
+                                                        500.0,
+                                                        5000.0
+                                                    ).toFloat(),
+                                                    Random.nextDouble(
+                                                        50.0,
+                                                        200.0
+                                                    ).toFloat()
+                                                )
+
+
+                                            )
+                                        }
 
 //                                         KIRILL TEST DATA = 352845
 //                                                                            Data.inputData.add(MyCircleData(0f, 50f, 100f, 0f))
@@ -174,7 +200,7 @@ class MainView : View() {
 
                         }
                         label {
-                            text = "X: ${Data.importMap.size}  Y: ${Data.importMap.size}\n" +
+                            text = "X: ${Data.importMap.sizeX}  Y: ${Data.importMap.sizeY}\n" +
                                     "height: ${Data.importMap.height}\n" +
                                     "width: ${Data.importMap.width}"
                         }

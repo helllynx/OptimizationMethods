@@ -3,26 +3,20 @@ package backend
 import kotlin.math.sqrt
 
 fun intersectionArea(rect: Rectangle, circleIndex: Int, i: Int, j: Int) {
-    if (Data.importMap.map[i][j].used)
-        return
-    val circlesToCheck = checkRectangle(rect)
-    calculateThisShitSomehow(circlesToCheck, i, j)
+    calculateThisShitSomehow(checkRectangle(rect), i, j)
 }
 
 fun calculateThisShitSomehow(circles: BooleanArray, i: Int, j: Int) {
     val mY = i * Data.importMap.height
     val mX = j * Data.importMap.width
     val circleIndexes = BooleanArray(circles.size)
-    val currentSpoil = Data.importMap.map[i][j].value
 
-    if (Data.importMap.map[i][j].subMap.isEmpty()) {
-        Data.importMap.map[i][j].subMap =
-                indexFloatFill(Data.importMap.map[i][j].value, Data.importMap.height, Data.importMap.width)
-    }
+    if (Data.importMap.map[i][j].subMap.isEmpty())
+        Data.importMap.map[i][j].subMap = BooleanArray(Data.importMap.height*Data.importMap.width)
 
     for (i_ in 0 until Data.importMap.height) {
         for (j_ in 0 until Data.importMap.width) {
-            if (Data.importMap.map[i][j].subMap[i_][j_].used) {
+            if (Data.importMap.map[i][j].subMap[i_*Data.importMap.height+j_]) {
                 continue
             }
             for (c in 0 until circles.size) {
@@ -33,14 +27,14 @@ fun calculateThisShitSomehow(circles: BooleanArray, i: Int, j: Int) {
                         Data.inputData[c].y
                     ) <= Data.inputData[c].r
                 ) {
+                    Data.importMap.map[i][j].subMap[i_*Data.importMap.height+j_] = true
                     circleIndexes[c] = true
-                    Data.importMap.map[i][j].subMap[i_][j_].used = true
                 } else {
                     circleIndexes[c] = false
                 }
             }
 
-            val spoil = currentSpoil / circleIndexes.trueCount()
+            val spoil = Data.importMap.map[i][j].value / circleIndexes.trueCount()
 
             for (idx in 0 until circleIndexes.size) {
                 if (circleIndexes[idx]) {
