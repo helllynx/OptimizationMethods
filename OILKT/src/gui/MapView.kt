@@ -27,9 +27,9 @@ class MapView : View() {
 
         for (c in Data.inputData) {
             add(circle {
-                centerX = c.x.toDouble()*scale
-                centerY = c.y.toDouble()*scale
-                radius = c.r.toDouble()*scale
+                centerX = c.x.toDouble() * scale
+                centerY = c.y.toDouble() * scale
+                radius = c.r.toDouble() * scale
                 fill = Color.TRANSPARENT
                 stroke = Color.color(Random.nextDouble(), Random.nextDouble(), Random.nextDouble())
             })

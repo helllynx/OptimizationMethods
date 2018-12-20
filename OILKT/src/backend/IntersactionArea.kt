@@ -7,16 +7,20 @@ fun intersectionArea(rect: Rectangle, circleIndex: Int, i: Int, j: Int) {
 }
 
 fun calculateThisShitSomehow(circles: BooleanArray, i: Int, j: Int) {
+
+    // if in this quadrant, OIL value is 0, we can skip calculation
+    if (Data.importMap.map[i][j].value == 0.0) return
+
     val mY = i * Data.importMap.height
     val mX = j * Data.importMap.width
     val circleIndexes = BooleanArray(circles.size)
 
     if (Data.importMap.map[i][j].subMap.isEmpty())
-        Data.importMap.map[i][j].subMap = BooleanArray(Data.importMap.height*Data.importMap.width)
+        Data.importMap.map[i][j].subMap = BooleanArray(Data.importMap.height * Data.importMap.width)
 
     for (i_ in 0 until Data.importMap.height) {
         for (j_ in 0 until Data.importMap.width) {
-            if (Data.importMap.map[i][j].subMap[i_*Data.importMap.height+j_]) {
+            if (Data.importMap.map[i][j].subMap[i_ * Data.importMap.height + j_]) {
                 continue
             }
             for (c in 0 until circles.size) {
@@ -27,7 +31,7 @@ fun calculateThisShitSomehow(circles: BooleanArray, i: Int, j: Int) {
                         Data.inputData[c].y
                     ) <= Data.inputData[c].r
                 ) {
-                    Data.importMap.map[i][j].subMap[i_*Data.importMap.height+j_] = true
+                    Data.importMap.map[i][j].subMap[i_ * Data.importMap.height + j_] = true
                     circleIndexes[c] = true
                 } else {
                     circleIndexes[c] = false
@@ -69,18 +73,6 @@ fun checkCircle(myMyCircleData: MyCircleData, rect: Rectangle): Boolean {
 
 fun getDistance2(xr: Float, yr: Float, xc: Float, yc: Float): Float {
     return sqrt(Math.pow((xr - xc).toDouble(), 2.0) + Math.pow((yr - yc).toDouble(), 2.0)).toFloat()
-}
-
-fun indexFloatFill(filler: Double, height: Int, width: Int): MutableList<MutableList<IndexFloat>> {
-    val result: MutableList<MutableList<IndexFloat>> = mutableListOf()
-
-    for (i in 0 until height) {
-        val list: MutableList<IndexFloat> = mutableListOf()
-        for (j in 0 until width)
-            list.add(IndexFloat(filler))
-        result.add(list)
-    }
-    return result
 }
 
 fun BooleanArray.trueCount(): Int {

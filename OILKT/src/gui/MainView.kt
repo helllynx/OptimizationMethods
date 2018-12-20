@@ -102,32 +102,6 @@ class MainView : View() {
                                         }
                                     )
                                     else -> {
-
-                                        for (i in 0..20) {
-                                            Data.inputData.add(
-                                                MyCircleData(
-                                                    Random.nextDouble(
-                                                        500.0,
-                                                        (Data.importMap.sizeX * Data.importMap.width).toDouble()
-                                                    ).toFloat(),
-                                                    Random.nextDouble(
-                                                        500.0,
-                                                        (Data.importMap.sizeY * Data.importMap.height).toDouble()
-                                                    ).toFloat(),
-                                                    Random.nextDouble(
-                                                        500.0,
-                                                        5000.0
-                                                    ).toFloat(),
-                                                    Random.nextDouble(
-                                                        50.0,
-                                                        200.0
-                                                    ).toFloat()
-                                                )
-
-
-                                            )
-                                        }
-
 //                                         KIRILL TEST DATA = 352845
 //                                                                            Data.inputData.add(MyCircleData(0f, 50f, 100f, 0f))
 //                                                                            Data.inputData.add(MyCircleData(300f, 350f, 100f, 0f))
@@ -166,6 +140,13 @@ class MainView : View() {
                                         // Another set data1
                                         //                                    Data.inputData.add(MyCircleData(5000f, 5000f, 100f, 50f))
 
+
+
+                                        Data.inputData.add(MyCircleData(0f, 0f, 100f, 50f))
+                                        Data.inputData.add(MyCircleData(0f, 15000f, 100f, 50f))
+                                        Data.inputData.add(MyCircleData(15000f, 15000f, 100f, 50f))
+                                        Data.inputData.add(MyCircleData(15000f, 0f, 100f, 50f))
+
                                         measureNanoTime { newCalculation(periodCount.text.toInt()) }.apply(::println)
                                         totalSpace.text = aggregateSpace().toString()
 
@@ -174,7 +155,41 @@ class MainView : View() {
                                 }
                             }
                         }
+                        button("Random test") {
+                            action {
+                                for (i in 0..20) {
+                                    Data.inputData.add(
+                                        MyCircleData(
+                                            Random.nextDouble(
+                                                500.0,
+                                                (Data.importMap.sizeX * Data.importMap.width).toDouble()
+                                            ).toFloat(),
+                                            Random.nextDouble(
+                                                500.0,
+                                                (Data.importMap.sizeY * Data.importMap.height).toDouble()
+                                            ).toFloat(),
+                                            Random.nextDouble(
+                                                500.0,
+                                                1000.0
+                                            ).toFloat(),
+                                            Random.nextDouble(
+                                                10.0,
+                                                400.0
+                                            ).toFloat()
+                                        )
 
+
+                                    )
+                                }
+                                Data.inputData.forEach {
+                                    requestView.circles.add(it)
+                                }
+                                measureNanoTime { newCalculation(periodCount.text.toInt()) }.apply(::println)
+                                totalSpace.text = aggregateSpace().toString()
+
+                                Data.inputData.forEach { outView.areas.add(it) }
+                            }
+                        }
                         button("Clear Out") {
                             action {
                                 outView.areas.clear()

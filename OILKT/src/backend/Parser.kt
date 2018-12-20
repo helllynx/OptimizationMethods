@@ -36,5 +36,10 @@ fun parse(pathToFile: String): MyMap {
         .windowed(sizeX, sizeX)
         .toCollection(ArrayList(sizeX * sizeY))
 
+    Data.part0 = Pair(Pair((sizeX / 2), 0), Pair(0, (sizeY / 2)))
+    Data.part1 = Pair(Pair(0, (sizeY / 2)), Pair((sizeX / 2), sizeY))
+    Data.part2 = Pair(Pair((sizeX / 2), sizeY), Pair(sizeX, (sizeY / 2)))
+    Data.part3 = Pair(Pair(sizeX, (sizeY / 2)), Pair((sizeX/2), 0))
+
     return MyMap(arrayData, oilMapType, height, width, sizeX, sizeY)
 }
