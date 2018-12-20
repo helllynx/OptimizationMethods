@@ -1,5 +1,6 @@
 package backend
 
+import java.lang.management.GarbageCollectorMXBean
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import kotlin.math.max
@@ -89,72 +90,53 @@ fun newCalculation(periodCount: Int) {
             circlePart3[c] = true
 
     }
-//
-    println("============================================")
-    println(circlePart0.contentToString())
-    println(circlePart1.contentToString())
-    println(circlePart2.contentToString())
-    println(circlePart3.contentToString())
 
-//    repeat(periodCount) {
-//
-//    }
-//
-//    runAsync {
-//        repeat(periodCount) {
-//
-////            riseCircleRadius()
-//        }
-//    }
-
-//
-//    val task2 = DoMoreWorkAsync()
-//
-//    await Task.WhenAll(task1, task2);
-
-
-    val WORKER_THREAD_POOL = Executors.newFixedThreadPool(4)
-    val latch = CountDownLatch(4)
-    WORKER_THREAD_POOL.submit {
-        try {
-            threadableCalculation(circlePart0, Data.part0)
-            latch.countDown()
-        } catch (e: InterruptedException) {
-            Thread.currentThread().interrupt()
+    val threadPool = Executors.newFixedThreadPool(4)
+    repeat(periodCount) {
+        val latch = CountDownLatch(4)
+        threadPool.submit {
+            try {
+                threadableCalculation(circlePart0, Data.part0)
+                latch.countDown()
+            } catch (e: InterruptedException) {
+                Thread.currentThread().interrupt()
+            }
         }
+
+        threadPool.submit {
+            try {
+                threadableCalculation(circlePart1, Data.part1)
+                latch.countDown()
+            } catch (e: InterruptedException) {
+                Thread.currentThread().interrupt()
+            }
+        }
+
+        threadPool.submit {
+            try {
+                threadableCalculation(circlePart2, Data.part2)
+                latch.countDown()
+            } catch (e: InterruptedException) {
+                Thread.currentThread().interrupt()
+            }
+        }
+
+        threadPool.submit {
+            try {
+                threadableCalculation(circlePart3, Data.part3)
+                latch.countDown()
+            } catch (e: InterruptedException) {
+                Thread.currentThread().interrupt()
+            }
+        }
+
+        latch.await()
+        println("REPEAT")
+        riseCircleRadius()
+        fullCleanMap()
     }
 
-    WORKER_THREAD_POOL.submit {
-        try {
-            threadableCalculation(circlePart1, Data.part1)
-            latch.countDown()
-        } catch (e: InterruptedException) {
-            Thread.currentThread().interrupt()
-        }
-    }
-
-    WORKER_THREAD_POOL.submit {
-        try {
-            threadableCalculation(circlePart2, Data.part2)
-            latch.countDown()
-        } catch (e: InterruptedException) {
-            Thread.currentThread().interrupt()
-        }
-    }
-
-    WORKER_THREAD_POOL.submit {
-        try {
-            threadableCalculation(circlePart3, Data.part3)
-            latch.countDown()
-        } catch (e: InterruptedException) {
-            Thread.currentThread().interrupt()
-        }
-    }
-
-// wait for the latch to be decremented by the two remaining threads
-    latch.await()
-
-    println("STOP")
+    threadPool.shutdown()
 }
 
 
