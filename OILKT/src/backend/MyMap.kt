@@ -1,7 +1,6 @@
 package backend
 
-import java.lang.Float.max
-import java.util.concurrent.CompletableFuture.runAsync
+import kotlin.math.max
 import kotlin.math.min
 
 class Data {
@@ -66,7 +65,7 @@ fun newCalculation(periodCount: Int) {
     val circlePart3 = BooleanArray(Data.inputData.size)
 
     for (c in 0 until Data.inputData.size) {
-        if (Data.inputData[c].x-Data.inputData[c].r < Data.part0.first.first*Data.importMap.width &&
+        if (Data.inputData[c].x-Data.inputData[c].r < Data.part0.second.first*Data.importMap.width &&
             Data.inputData[c].y-Data.inputData[c].r < Data.part0.second.second*Data.importMap.height )
             circlePart0[c] = true
 
@@ -75,54 +74,67 @@ fun newCalculation(periodCount: Int) {
             circlePart1[c] = true
 
         if (Data.inputData[c].x+Data.inputData[c].r > Data.part2.first.first*Data.importMap.width &&
-            Data.inputData[c].y+Data.inputData[c].r > Data.part2.second.second*Data.importMap.height )
+            Data.inputData[c].y+Data.inputData[c].r > Data.part2.first.second*Data.importMap.height )
             circlePart2[c] = true
 
-        if (Data.inputData[c].x+Data.inputData[c].r > Data.part3.second.first*Data.importMap.width &&
-            Data.inputData[c].y-Data.inputData[c].r < Data.part3.first.second*Data.importMap.height )
+        if (Data.inputData[c].x+Data.inputData[c].r > Data.part3.first.first*Data.importMap.width &&
+            Data.inputData[c].y-Data.inputData[c].r < Data.part3.second.second*Data.importMap.height )
             circlePart3[c] = true
 
     }
 //
-//    println("============================================")
-//    println(circlePart0.contentToString())
-//    println(circlePart1.contentToString())
-//    println(circlePart2.contentToString())
-//    println(circlePart3.contentToString())
+    println("============================================")
+    println(circlePart0.contentToString())
+    println(circlePart1.contentToString())
+    println(circlePart2.contentToString())
+    println(circlePart3.contentToString())
 
-    repeat(periodCount) {
+//    repeat(periodCount) {
+//
+//    }
+//
+//    runAsync {
+//        repeat(periodCount) {
+//
+////            riseCircleRadius()
+//        }
+//    }
 
-    }
+//
+//    val task2 = DoMoreWorkAsync()
+//
+//    await Task.WhenAll(task1, task2);
 
-    runAsync {
-        repeat(periodCount) {
+    val task0 = threadableCalculation(circlePart0, Data.part0)
+    val task1 = threadableCalculation(circlePart1, Data.part1)
+    val task2 = threadableCalculation(circlePart2, Data.part2)
+    val task4 = threadableCalculation(circlePart3, Data.part3)
 
-//            riseCircleRadius()
+    coroutineScope {
+        List(100_000) {
+            launch {
+                delay(100)
+            }
         }
     }
-
-
-    val task2 = DoMoreWorkAsync()
-
-    await Task.WhenAll(task1, task2);
-
+    await Task.WhenAll(task0, task1, task2, task3)
 }
 
-fun threadableCalculation(count: Int, circleIndexBool: BooleanArray, part: Pair<Pair<Int, Int>, Pair<Int, Int>>){
+fun threadableCalculation(circleIndexBool: BooleanArray, part: Pair<Pair<Int, Int>, Pair<Int, Int>>){
         for (circleIndex in 0 until Data.inputData.size) {
             if (circleIndexBool[circleIndex]) {
-                val startX =
+                var startX =
                     (max(Data.inputData[circleIndex].x - Data.inputData[circleIndex].r, 0f) / Data.importMap.width).toInt()
-                val startY =
+                var startY =
                     (max(Data.inputData[circleIndex].y - Data.inputData[circleIndex].r, 0f) / Data.importMap.height).toInt()
-                val endX = min(
+                var endX = min(
                     Data.importMap.sizeX,
                     ((max(
                         Data.inputData[circleIndex].x + Data.inputData[circleIndex].r,
                         0f
                     ) / Data.importMap.width).toInt() + 1)
                 )
-                val endY =
+                var endY =
                     min(
                         Data.importMap.sizeY,
                         ((max(
@@ -130,6 +142,12 @@ fun threadableCalculation(count: Int, circleIndexBool: BooleanArray, part: Pair<
                             0f
                         ) / Data.importMap.height).toInt() + 1)
                     )
+
+                endX = min(endX, part.second.first)
+                startY = max(startY, part.first.second)
+                endY = min(endY, part.second.second)
+                startX = max(startX, part.first.first)
+
                 Data.importMap.getIntersectRectanglesArea(circleIndex, startX, startY, endX, endY)
             }
         }
