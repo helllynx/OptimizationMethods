@@ -6,7 +6,6 @@ import java.util.concurrent.Executors
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.math.sqrt
 
 
 class Data {
@@ -40,10 +39,12 @@ class MyCircleData {
         this.r = r
         this.growRate = growRate
     }
+
     constructor(r: Float, growRate: Float) {
         this.r = r
         this.growRate = growRate
     }
+
     constructor(r: Float) {
         this.r = r
     }
@@ -113,7 +114,6 @@ fun newCalculation(periodCount: Int) {
             Data.inputData[c].y - Data.inputData[c].r < Data.part3.second.second * Data.importMap.height
         )
             circlePart3[c] = true
-
     }
 
     val threadPool = Executors.newFixedThreadPool(4)
@@ -223,33 +223,26 @@ fun fullCleanMap() {
 
 
 fun optimize() {
-
     var sum = 0f
+    val result: MutableMap<Pair<Int, Int>, Double> = hashMapOf()
+
     for (c in Data.inputData)
         sum += c.r
 
-    val a = sum / Data.inputData.size
-    val b =((a) / Data.importMap.width)
+    val avrDiameter = ((sum / Data.inputData.size) / Data.importMap.width) * 2
+    val arrOfDividers = getAllPossibleGrids(Data.importMap.sizeX)
 
-    val avrDiameter = b*2
+    val stepXID = abs(Arrays.binarySearch(arrOfDividers, Data.importMap.sizeX / (Data.importMap.sizeX / avrDiameter).toInt()))
+    val stepYID = abs(Arrays.binarySearch(arrOfDividers, Data.importMap.sizeY / (Data.importMap.sizeY / avrDiameter).toInt()))
 
-    val result: MutableMap<Pair<Int, Int>, Double> = hashMapOf()
-
-    val tempStepX = Data.importMap.sizeX/(Data.importMap.sizeX / avrDiameter).toInt()
-    val tempStepY = Data.importMap.sizeY/(Data.importMap.sizeY / avrDiameter).toInt()
-
-    val t = getAllPossibleGrids(Data.importMap.sizeX)
-
-    val stepX =     t[abs(Arrays.binarySearch(t, tempStepX))]
-    val stepY =     t[abs(Arrays.binarySearch(t, tempStepY))]
-
-
+    val stepX = arrOfDividers[stepXID]
+    val stepY = arrOfDividers[stepYID]
 
     println("stepX: $stepX   stepY: $stepY")
 
     for (i in 0 until Data.importMap.sizeY step stepY) {
         for (j in 0 until Data.importMap.sizeX step stepX) {
-            result[Pair(i,j)] = calcCore(i, j, stepX, stepY)
+            result[Pair(i, j)] = calcCore(i, j, stepX, stepY)
         }
     }
 
@@ -259,22 +252,30 @@ fun optimize() {
     val temp: ArrayList<MyCircleData> = ArrayList()
 
     Data.inputData = ArrayList(Data.inputData.toList()
-        .sortedWith(compareBy { it.r }).reversed())
+        .sortedWith(compareBy { it.r }).reversed()
+    )
 
     for (i in 0 until Data.inputData.size) {
-        temp.add(MyCircleData((sortedMap[i].first.first*Data.importMap.width+(stepX*Data.importMap.width)/2).toFloat(), (sortedMap[i].first.second*Data.importMap.height+(stepY*Data.importMap.height)/2).toFloat(), Data.inputData[i].r, 0f))
+        temp.add(
+            MyCircleData(
+                (sortedMap[i % sortedMap.size].first.first * Data.importMap.width + (stepX * Data.importMap.width) / 2).toFloat(),
+                (sortedMap[i % sortedMap.size].first.second * Data.importMap.height + (stepY * Data.importMap.height) / 2).toFloat(),
+                Data.inputData[i].r,
+                0f
+            )
+        )
     }
     Data.inputData = temp
 }
 
-fun calcCore(startY: Int, startX: Int, stepX: Int, stepY: Int): Double{
+fun calcCore(startY: Int, startX: Int, stepX: Int, stepY: Int): Double {
     var area = 0.0
 
-    val mult = Data.importMap.height*Data.importMap.width
+    val mult = Data.importMap.height * Data.importMap.width
 
-    for (i in startY until startY+stepY) {
-        for (j in startX until startX+stepX) {
-                area += Data.importMap.map[i][j].value*mult
+    for (i in startY until startY + stepY) {
+        for (j in startX until startX + stepX) {
+            area += Data.importMap.map[i][j].value * mult
         }
     }
 
@@ -285,7 +286,7 @@ fun calcCore(startY: Int, startX: Int, stepX: Int, stepY: Int): Double{
 fun getAllPossibleGrids(n: Int): IntArray {
     var del: ArrayList<Int> = arrayListOf()
 
-    for (i in 2..(n/2)) {
+    for (i in 2..(n / 2)) {
         if (n % i == 0)
             del.add(i)
     }
