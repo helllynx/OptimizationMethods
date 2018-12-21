@@ -1,7 +1,5 @@
 package gui
 
-import backend.IndexFloat
-import backend.MyMap
 //import com.esotericsoftware.kryo.Kryo
 import tornadofx.App
 

@@ -1,10 +1,12 @@
 package backend
 
-import java.lang.management.GarbageCollectorMXBean
+import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.sqrt
 
 
 class Data {
@@ -20,8 +22,31 @@ class Data {
     }
 }
 
-class MyCircleData(var x: Float, var y: Float, var r: Float, var growRate: Float) {
+//class MyCircleDataTest(var x: Float, var y: Float, var r: Float, var growRate: Float) {
+//    var calculatedArea: Double = 0.0
+//}
+
+class MyCircleData {
+    var x: Float = 0f
+    var y: Float = 0f
+    var r: Float = 0f
+    var growRate: Float = 0f
     var calculatedArea: Double = 0.0
+
+
+    constructor(x: Float, y: Float, r: Float, growRate: Float) {
+        this.x = x
+        this.y = y
+        this.r = r
+        this.growRate = growRate
+    }
+    constructor(r: Float, growRate: Float) {
+        this.r = r
+        this.growRate = growRate
+    }
+    constructor(r: Float) {
+        this.r = r
+    }
 }
 
 class IndexFloat(var value: Double) {
@@ -196,3 +221,96 @@ fun fullCleanMap() {
     }
 }
 
+
+fun optimize() {
+
+    var sum = 0f
+    for (c in Data.inputData)
+        sum += c.r
+
+    val a = sum / Data.inputData.size
+    val b =((a) / Data.importMap.width)
+
+    val avrDiameter = b*2
+
+    val result: MutableMap<Pair<Int, Int>, Double> = hashMapOf()
+
+    val tempStepX = Data.importMap.sizeX/(Data.importMap.sizeX / avrDiameter).toInt()
+    val tempStepY = Data.importMap.sizeY/(Data.importMap.sizeY / avrDiameter).toInt()
+
+    val t = getAllPossibleGrids(Data.importMap.sizeX)
+
+    val stepX =     t[abs(Arrays.binarySearch(t, tempStepX))]
+    val stepY =     t[abs(Arrays.binarySearch(t, tempStepY))]
+
+
+
+    println("stepX: $stepX   stepY: $stepY")
+
+    for (i in 0 until Data.importMap.sizeY step stepY) {
+        for (j in 0 until Data.importMap.sizeX step stepX) {
+            result[Pair(i,j)] = calcCore(i, j, stepX, stepY)
+        }
+    }
+
+    val sortedMap = ArrayList(result.toList()
+        .sortedByDescending { (_, value) -> value })
+
+    val temp: ArrayList<MyCircleData> = ArrayList()
+
+    Data.inputData = ArrayList(Data.inputData.toList()
+        .sortedWith(compareBy { it.r }).reversed())
+
+    for (i in 0 until Data.inputData.size) {
+        temp.add(MyCircleData((sortedMap[i].first.first*Data.importMap.width+(stepX*Data.importMap.width)/2).toFloat(), (sortedMap[i].first.second*Data.importMap.height+(stepY*Data.importMap.height)/2).toFloat(), Data.inputData[i].r, 0f))
+    }
+    Data.inputData = temp
+}
+
+fun calcCore(startY: Int, startX: Int, stepX: Int, stepY: Int): Double{
+    var area = 0.0
+
+    val mult = Data.importMap.height*Data.importMap.width
+
+    for (i in startY until startY+stepY) {
+        for (j in startX until startX+stepX) {
+                area += Data.importMap.map[i][j].value*mult
+        }
+    }
+
+    return area
+}
+
+
+fun getAllPossibleGrids(n: Int): IntArray {
+    var del: ArrayList<Int> = arrayListOf()
+
+    for (i in 2..(n/2)) {
+        if (n % i == 0)
+            del.add(i)
+    }
+    return del.toIntArray()
+}
+
+
+fun getClosestK(a: ArrayList<Int>, x: Int): Int {
+
+    var low = 0
+    var high = a.size - 1
+
+    if (high < 0)
+        throw IllegalArgumentException("The array cannot be empty")
+
+    while (low < high) {
+        val mid = (low + high) / 2
+        assert(mid < high)
+        val d1 = Math.abs(a[mid] - x)
+        val d2 = Math.abs(a[mid + 1] - x)
+        if (d2 <= d1) {
+            low = mid + 1
+        } else {
+            high = mid
+        }
+    }
+    return a[high]
+}

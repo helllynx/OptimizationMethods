@@ -23,7 +23,7 @@ class MapView : View() {
         drawShapes(gc)
         add(canvas)
 
-        val scale = 0.8
+        val scale = 1.0/((Data.importMap.sizeX*Data.importMap.width).toDouble() / 1000.0)
 
         for (c in Data.inputData) {
             add(circle {

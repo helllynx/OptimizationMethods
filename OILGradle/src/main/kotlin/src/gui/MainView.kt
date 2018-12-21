@@ -1,9 +1,6 @@
 package gui
 
-import backend.Data
-import backend.MyCircleData
-import backend.aggregateSpace
-import backend.newCalculation
+import backend.*
 import javafx.collections.FXCollections
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonBar
@@ -51,9 +48,11 @@ class MainView : View() {
                         }
                         button("Add circle") {
                             action {
-                                if ((!x.text.isFloat() || !y.text.isFloat() || !r.text.isFloat() || !rate.text.isFloat())
-                                    && (!x.text.isInt() || !y.text.isInt() || !r.text.isInt() || !rate.text.isInt())
-                                ) {
+//                                if ((!x.text.isFloat() || !y.text.isFloat() || !r.text.isFloat() || !rate.text.isFloat())
+//                                    && (!x.text.isInt() || !y.text.isInt() || !r.text.isInt() || !rate.text.isInt())
+//                                )
+                                if(false)
+                                {
                                     alert(
                                         type = Alert.AlertType.ERROR,
                                         header = "BAD INPUT! Enter Float or Int value!",
@@ -141,15 +140,13 @@ class MainView : View() {
                                         //                                    Data.inputData.add(MyCircleData(5000f, 5000f, 100f, 50f))
 
 
-
 //                                        Data.inputData.add(MyCircleData(0f, 0f, 100f, 50f))
 //                                        Data.inputData.add(MyCircleData(0f, 15000f, 100f, 50f))
 //                                        Data.inputData.add(MyCircleData(15000f, 15000f, 100f, 50f))
 //                                        Data.inputData.add(MyCircleData(15000f, 0f, 100f, 50f))
-
+//                                        optimize()
                                         measureNanoTime { newCalculation(periodCount.text.toInt()) }.apply(::println)
                                         totalSpace.text = aggregateSpace().toString()
-
                                         Data.inputData.forEach { outView.areas.add(it) }
                                     }
                                 }
@@ -160,28 +157,31 @@ class MainView : View() {
                                 for (i in 0..20) {
                                     Data.inputData.add(
                                         MyCircleData(
+//                                            Random.nextDouble(
+//                                                500.0,
+//                                                (Data.importMap.sizeX * Data.importMap.width).toDouble()
+//                                            ).toFloat(),
+//                                            Random.nextDouble(
+//                                                500.0,
+//                                                (Data.importMap.sizeY * Data.importMap.height).toDouble()
+//                                            ).toFloat(),
                                             Random.nextDouble(
-                                                500.0,
-                                                (Data.importMap.sizeX * Data.importMap.width).toDouble()
-                                            ).toFloat(),
-                                            Random.nextDouble(
-                                                500.0,
-                                                (Data.importMap.sizeY * Data.importMap.height).toDouble()
-                                            ).toFloat(),
-                                            Random.nextDouble(
-                                                500.0,
-                                                5000.0
-                                            ).toFloat(),
-                                            Random.nextDouble(
-                                                50.0,
-                                                200.0
+                                                200.0,
+                                                2000.0
                                             ).toFloat()
+//                                            Random.nextDouble(
+//                                                50.0,
+//                                                200.0
+//                                            ).toFloat()
                                         )
                                     )
                                 }
                                 Data.inputData.forEach {
                                     requestView.circles.add(it)
                                 }
+
+                                optimize()
+
                                 measureNanoTime { newCalculation(periodCount.text.toInt()) }.apply(::println)
                                 totalSpace.text = aggregateSpace().toString()
 
