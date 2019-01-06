@@ -3,6 +3,7 @@ package backend
 import java.util.*
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -11,6 +12,7 @@ import kotlin.math.min
 class Data {
     companion object {
         var importMap: MyMap = MyMap()
+        var importMapPORO: MyMap = MyMap()
         var inputData: ArrayList<MyCircleData> = ArrayList()
         // this is shit and i know it
         var part0: Pair<Pair<Int, Int>, Pair<Int, Int>> = Pair(Pair(0, 0), Pair(0, 0))
@@ -208,7 +210,7 @@ fun aggregateSpace(): Double {
 
 fun riseCircleRadius() {
     for (i in 0 until Data.inputData.size) {
-        Data.inputData[i].r += Data.inputData[i].growRate
+        Data.inputData[i].r += 1.45f
     }
 }
 
@@ -223,6 +225,12 @@ fun fullCleanMap() {
 
 
 fun optimize() {
+    val tempFUCK: ArrayList<Float> = arrayListOf()
+
+    Data.inputData.forEach { tempFUCK.add(it.r) }
+
+    riseCircleRadius()
+
     var sum = 0f
     val result: MutableMap<Pair<Int, Int>, Double> = hashMapOf()
 
@@ -266,6 +274,9 @@ fun optimize() {
         )
     }
     Data.inputData = temp
+    for (i in 0 until Data.inputData.size) {
+        Data.inputData[i].r = tempFUCK[i]
+    }
 }
 
 fun calcCore(startY: Int, startX: Int, stepX: Int, stepY: Int): Double {

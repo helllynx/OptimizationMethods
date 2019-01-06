@@ -13,8 +13,8 @@ import kotlin.random.Random
 
 class MapView : View() {
 
-    val height = 1000.0
-    val width = 1000.0
+    val height = 600.0
+    val width = 600.0
 
     override val root = group {
 
@@ -23,7 +23,7 @@ class MapView : View() {
         drawShapes(gc)
         add(canvas)
 
-        val scale = 1.0/((Data.importMap.sizeX*Data.importMap.width).toDouble() / 1000.0)
+        val scale = 1.0/((Data.importMap.sizeX*Data.importMap.width).toDouble() / width)
 
         for (c in Data.inputData) {
             add(circle {

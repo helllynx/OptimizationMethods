@@ -113,22 +113,7 @@ class MainView : View() {
                                 for (i in 0 until 20) {
                                     Data.inputData.add(
                                         MyCircleData(
-                                            Random.nextDouble(
-                                                0.0,
-                                                (Data.importMap.sizeX * Data.importMap.width).toDouble()
-                                            ).toFloat(),
-                                            Random.nextDouble(
-                                                0.0,
-                                                (Data.importMap.sizeY * Data.importMap.height).toDouble()
-                                            ).toFloat(),
-                                            Random.nextDouble(
-                                                500.0,
-                                                2000.0
-                                            ).toFloat(),
-                                            Random.nextDouble(
-                                                200.0,
-                                                500.0
-                                            ).toFloat()
+                                            0f, 0f, 50f, 0f
                                         )
                                     )
                                 }
@@ -142,6 +127,8 @@ class MainView : View() {
                                 totalSpace.text = aggregateSpace().toString()
 
                                 Data.inputData.forEach { outView.areas.add(it) }
+
+                                Data.inputData.forEach{  println("X: ${it.x} Y: ${it.y} R: ${it.r} G: ${it.growRate} S: ${it.calculatedArea} ") }
                             }
                         }
                         button("Clear Out") {

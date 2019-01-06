@@ -17,19 +17,32 @@ class FileImportView : View() {
     override val root = vbox {
         paddingAll = 10.0
         spacing = 10.0
-        button("Open data") {
+        button("Open data map") {
             action {
                 files = chooseFile("Open ", fileTypeFilterTXT)
                 file = if (files.isEmpty()) "" else files[0].absolutePath
                 if (!file.isEmpty()) {
                     println("started")
                     measureNanoTime { Data.importMap = backend.parse(file) }.apply(::println)
-//                    val outputFS = Output(FileOutputStream(file.substring(file.lastIndexOf("/") + 1) + ".bin"))
-//                    kryo.writeObject(outputFS, Data.importMap)
-//                    outputFS.close()
-//                    println("Read txt map: $file")
-//                    openInternalWindow(DataInputView::class,modal = false)
-//                    replaceWith<DataInputView>()
+                } else {
+                    alert(
+                        type = Alert.AlertType.ERROR,
+                        header = "Please select file! (*.txt)",
+                        actionFn = { btnType ->
+                            if (btnType.buttonData == ButtonBar.ButtonData.OK_DONE) {
+                            }
+                        }
+                    )
+                }
+            }
+        }
+        button("Open data PORO") {
+            action {
+                files = chooseFile("Open ", fileTypeFilterTXT)
+                file = if (files.isEmpty()) "" else files[0].absolutePath
+                if (!file.isEmpty()) {
+                    println("started")
+                    measureNanoTime { Data.importMapPORO = backend.parse(file) }.apply(::println)
                 } else {
                     alert(
                         type = Alert.AlertType.ERROR,
