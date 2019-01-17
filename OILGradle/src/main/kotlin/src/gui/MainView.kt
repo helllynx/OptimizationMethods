@@ -113,7 +113,7 @@ class MainView : View() {
                                 for (i in 0 until 20) {
                                     Data.inputData.add(
                                         MyCircleData(
-                                            0f, 0f, 50f, 0f
+                                            0f, 0f, 1500f, 0f
                                         )
                                     )
                                 }

@@ -9,7 +9,7 @@ fun intersectionArea(rect: Rectangle, circleIndex: Int, i: Int, j: Int) {
 fun calculateThisShitSomehow(circles: BooleanArray, i: Int, j: Int) {
 
     // if in this quadrant, OIL value is 0, we can skip calculation
-    if (Data.importMap.map[i][j].value == 0.0) return
+    if (Data.importMap.map[i][j].value == 0f) return
 
     val mY = i * Data.importMap.height
     val mX = j * Data.importMap.width

@@ -25,33 +25,21 @@ fun parse(pathToFile: String): MyMap {
 
     val sizeX = data[1].split(" ")[0].toInt()
     val sizeY = data[1].split(" ")[1].toInt()
-    val height = data[2].split(" ")[1].toByte()
+    val height = data[2].split(" ")[0].toByte()
     val width = data[2].split(" ")[1].toByte()
 
-    println("started")
+    println("Start reading file")
 
     val arrayData = data[3]
         .split(" ")
-        .map { IndexFloat(it.toDouble()) }
-        .windowed(sizeX, sizeX)
+        .map { IndexFloat(it.toFloat()) }
+        .windowed(sizeX, sizeY)
         .toCollection(ArrayList(sizeX * sizeY))
-if(oilMapType == MyMap.MapType.PORO)
-{
-    var s = 0.0
-    for (i in 0 until arrayData.size) {
-        for(j in 0 until arrayData.size) {
-            s += arrayData[i][j].value
-        }
-    }
-    s = s/(arrayData.size*arrayData.size)
-    println(s)
-}
+
     Data.part0 = Pair(Pair(0, 0), Pair(sizeX / 2, sizeY / 2))
     Data.part1 = Pair(Pair(0, sizeY / 2), Pair(sizeX / 2, sizeY))
     Data.part2 = Pair(Pair(sizeX / 2, sizeY / 2), Pair(sizeX, sizeY))
     Data.part3 = Pair(Pair(sizeX / 2, 0), Pair(sizeX, sizeY / 2))
-
-
 
     return MyMap(arrayData, oilMapType, height, width, sizeX, sizeY)
 }

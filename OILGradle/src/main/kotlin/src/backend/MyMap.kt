@@ -52,7 +52,7 @@ class MyCircleData {
     }
 }
 
-class IndexFloat(var value: Double) {
+class IndexFloat(var value: Float) {
     var subMap: BooleanArray = booleanArrayOf()
 }
 
@@ -120,6 +120,8 @@ fun newCalculation(periodCount: Int) {
 
     val threadPool = Executors.newFixedThreadPool(4)
     repeat(periodCount) {
+        val i = 0
+        println("Period: $i")
         val latch = CountDownLatch(4)
         threadPool.submit {
             try {
@@ -158,9 +160,9 @@ fun newCalculation(periodCount: Int) {
         }
 
         latch.await()
-        println("REPEAT")
         riseCircleRadius()
         fullCleanMap()
+        i+=1
     }
 
     threadPool.shutdown()
@@ -225,9 +227,9 @@ fun fullCleanMap() {
 
 
 fun optimize() {
-    val tempFUCK: ArrayList<Float> = arrayListOf()
+    val circlesTemp: ArrayList<Float> = arrayListOf()
 
-    Data.inputData.forEach { tempFUCK.add(it.r) }
+    Data.inputData.forEach { circlesTemp.add(it.r) }
 
     riseCircleRadius()
 
@@ -275,7 +277,7 @@ fun optimize() {
     }
     Data.inputData = temp
     for (i in 0 until Data.inputData.size) {
-        Data.inputData[i].r = tempFUCK[i]
+        Data.inputData[i].r = circlesTemp[i]
     }
 }
 
